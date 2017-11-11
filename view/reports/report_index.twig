@@ -1,0 +1,28 @@
+{% extends 'templates/template.twig' %} 
+
+{% block title %} Sistema - Inicio {% endblock %}
+
+{% block menu %} 
+
+{% set prefix = 'producao' %}
+
+{% set menu = ['Voltar'] %}
+
+{% include 'templates/menu.twig' with menu %}
+
+{% endblock %} {% block content %}
+
+
+{# aqui começa a brincadeira #}
+
+<h1>Olá amiginho, faça algo legal aqui</h1>
+<hr>
+
+<a href="relatorios/createTravelReport" target"_blank"><button class="btn btn-secondary">Criar Relatorio de Viagem</button></a>
+
+<a href='createRepo' target='_blank'><button>Criar relarorio</button></a>
+
+{# aqui termina a brincadeira #}
+{% endblock %}
+{% block cjs %}
+{% endblock %}

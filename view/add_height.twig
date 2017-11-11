@@ -1,0 +1,91 @@
+{% extends 'templates/template.twig' %}
+{% block title %} Sistema {% endblock %}
+{% block css %}  
+<style type="text/css">
+	input[type=number]::-webkit-inner-spin-button, 
+	input[type=number]::-webkit-outer-spin-button { 
+		-webkit-appearance: none; 
+		-moz-appearance: none;
+		margin: 0; 
+	}
+</style>
+{% endblock %}
+
+{% block cjs %} 
+<script src="/assets/js/sys/jquery.mask.min.js"></script>
+<script src="/assets/js/sys/axios.min.js"></script>
+<script src="/assets/js/ajax.js"></script>
+<script src="/assets/js/register/functions.js"></script>
+{% endblock %}
+
+{% block menu %} 
+{% set menu = [ 'Produto', 'Tamanho', 'Descrição', 'Voltar'] %}
+{% set prefix = 'registros' %}
+{% include 'templates/menu.twig' with menu %} 
+{% endblock %}
+
+{% block content %}
+<h3>
+	Tamanhos
+</h3>
+<hr>
+<button class="btn btn-primary btn-lg btn-block" id="show-modal">Adicionar Tamanho</button>
+<hr>
+
+<fieldset>
+	<legend>Lista de Tamanhos</legend>
+	<table class="table">
+		<thdead>
+			<tr>
+				<th><center>Id</center></th>
+				<th><center>Medida</center></th>
+				<th><center>Ações</center></th>
+			</tr>
+		</thdead>
+		<tbody class="produtos">
+			{% for h in heights %}
+			<tr id="{{ h.id }}">
+				<td><center>{{ h.id }}</center></td>
+				<td><center>{{ h.height | height }}</center></td>
+				<td><center><span class="badge badge-pill badge-danger edit r" style="cursor: pointer">Remover</span></center></td>
+			</tr>
+			{% endfor %}
+		</tbody>
+	</table>
+</fieldset>
+
+<div id="dialog-confirm" title="Adicionar tamanho">
+	<table class="table">
+		<thead>
+			<tr>
+				<th colspan="2">Tamanho</th>
+			</tr>
+		</thead>
+		<tbody>
+			<tr>
+				<td>Inserir apenas numeros.</td>
+			</tr>
+			<tr>
+				<td>
+					<form method="POST">
+						<input type="text" id="entity" name="height" min="3" max="3" placeholder="1,90" class="form-control insert h numberOnly" required="required" entity="{{ entity }}">
+						
+						<div style="display: none;">
+							<input type="submit" value="sendinfo">
+						</div>
+						{{ csrf.field | raw }}
+					</form>
+				</td>
+			</tr>
+		</tbody>
+	</table>
+</div>
+
+<div id="dialog-form" title="Aviso">
+	<input type="hidden" id="confirm" entity="{{ entity }}">
+	<p>Deseja remover item?</p>
+</div>
+
+<div id="dialog" title="Aviso">
+</div>
+{% endblock %}

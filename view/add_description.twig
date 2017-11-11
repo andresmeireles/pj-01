@@ -1,0 +1,81 @@
+{% extends 'templates/template.twig' %}
+{% block title %} Sistema {% endblock %}
+{% block css %}  
+{% endblock %}
+
+{% block cjs %} 
+<script src="/assets/js/sys/axios.min.js"></script>
+<script src="/assets/js/ajax.js"></script>
+<script src="/assets/js/register/functions.js"></script>
+
+<script>
+	var csrf = document.querySelector('#tname');
+</script>
+{% endblock %}
+
+{% block menu %} 
+{% set menu = [ 'Produto', 'Tamanho', 'Descrição', 'Clientes','Voltar'] %}
+{% set prefix = 'registros' %}
+{% include 'templates/menu.twig' with menu %} 
+
+{% endblock %}
+
+{% block content %}
+<h3>
+	Descrições
+</h3>
+<hr>
+<button class="btn btn-primary btn-lg btn-block" id="show-modal">Adicionar Descrição</button>
+<hr>
+
+<fieldset>
+	<legend>Descrições</legend>
+	<table class="table">
+		<thdead>
+			<tr>
+				<th><center>Id</center></th>
+				<th><center>Medida</center></th>
+				<th><center>Ações</center></th>
+			</tr>
+		</thdead>
+		<tbody class="produtos">
+			{% for d in desc %}
+			<tr id="{{ d.id }}">
+				<td><center>{{ d.id }}</center></td>
+				<td><center>{{ d.description }}</center></td>
+				<td><center><span style="cursor: pointer" class="badge badge-pill badge-danger edit r">Remover</span></center></td>
+			</tr>
+			{% endfor %}
+		</tbody>
+	</table>
+</fieldset>
+
+<div id="dialog-confirm" title="Adicinar Descrição">
+	<table class="table">
+		<thead>
+			<tr>
+				<th colspan="2">Descrição</th>
+			</tr>
+		</thead>
+		<tbody>
+			<tr>
+				<td>Inserir Descrição ex: A9</td>
+			</tr>
+			<tr>
+				<td>
+					<input type="text" id="entity" name="description" max="3" placeholder="A9" class="form-control insert d" required="required" entity="{{ entity }}">
+					{{ csrf.field | raw }}
+				</td>
+			</tr>
+		</tbody>
+	</table>
+</div>
+
+<div id="dialog-form" title="Aviso">
+	<input type="hidden" id="confirm" entity="{{ entity }}">
+	<p>Deseja remover item?</p>
+</div>
+
+<div id="dialog" title="Aviso">
+</div>
+{% endblock %}

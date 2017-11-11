@@ -1,0 +1,108 @@
+{% extends 'templates/template.twig' %}
+{% block title %} Sistema {% endblock %}
+
+{% block cjs %} 
+<script src="/assets/js/sys/jquery.mask.min.js"></script>
+<script src="/assets/js/sys/axios.min.js"></script>
+<script src="/assets/js/ajax.js"></script>
+<script src="/assets/js/register/product.js"></script>
+{% endblock %}
+
+{% block menu %} 
+{% set prefix = 'registros' %}
+{% set menu = [ 'Produto', 'Tamanho', 'Descrição', 'Clientes', 'Voltar'] %}
+{% include 'templates/menu.twig' with menu %} 
+
+{% endblock %}
+
+{% block content %}
+<h3>
+  Produtos
+</h3>
+<hr>
+<button class="btn btn-primary btn-lg btn-block" id="show-modal" class="insert" entity="{{ entity }}">Adicionar Produto</button>
+<hr>
+
+<table class="table">
+  <thdead>
+    <tr>
+      <th><center>Id</center></th>
+      <th><center>Nome</center></th>
+      <th><center>Tamanho</center></th>
+      <th><center>Valor</center></th>
+      <th><center>Ações</center></th>
+    </tr>
+  </thdead>
+  <tbody class="prod">
+    {% for prod in product %}
+    <tr id='{{ prod.id }}'>
+      <td><center>{{ prod.id }}</center></td>
+      <td><center>{{ prod.getDescription }}</center></td>
+      <td><center>{{ prod.getHeight }}</center></td>
+      <td><center>{{ prod.price | money }}</center></td>
+      <td><center><span class="badge badge-pill badge-info edit">Editar</span> <div class="badge badge-pill badge-danger rmv">Remove</div></center></td>
+    </tr>
+    {% endfor %}
+  </tbody>
+</table>
+
+<div id="dialog-confirm" title="Adicionar Produto">
+  <table class="table table-responsive">
+    <thead>
+      <tr>
+        <th>Modelo</th>
+        <th>Tamanho</th>
+        <th>Preço</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>
+          <div class="form-group">
+            <select class="form-control m mod" id="model" name="model" style="height: 2.05em">
+              <option value="" selected disabled>Model</option>
+              {% for mod in model %}
+              <option value="{{ mod.id }}">{{ mod.description }}</option>
+              {% endfor %}
+            </select>
+          </div>
+        </td>
+        <td>
+          <div class="form-group">
+            <select class="form-control" id="height" name="height" style="height: 2.05em">
+              <option value="" selected disabled>Tamanho</option>
+            </select>
+          </td>
+        </div>
+        <td width="30%">
+          <input type="text" class="form-control tamanho" id="price" name="price" entity="{{ entity }}" placeholder="R$ 267,99" disabled required>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
+<div id="dialog-message" title="Aviso">
+  <p>Deseja remover mesmo o item?</p>
+  <input type="hidden" entity="{{ entity }}">
+</div>
+
+<div id="dialog-form" title="Editar">
+  <table class="table table-responsive">
+    <thead>
+      <tr>
+        <th><center>Modelo</center></th>
+        <th><center>Tamanho</center></th>
+        <th><center>Preço</center></th>
+      </tr>
+    </thead>
+    <tbody class="edit-prod"></tbody>
+  </table>
+</div>
+
+<div id="dialog" title="Aviso">
+</div>
+
+<input type="hidden" id="entity-field" entity="{{ entity }}"  value="ninja">
+<input type="hidden" id="auxentity" entity="{{ auxEntity }}" value="ninja">
+{% endblock %}

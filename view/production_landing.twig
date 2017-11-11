@@ -1,0 +1,46 @@
+{% extends 'templates/template.twig' %} 
+
+{% block title %} Sistema - Inicio {% endblock %}
+
+{% block menu %} 
+
+{% set prefix = 'producao' %}
+
+{% set menu = ['Inicio', 'Adicionar', 'Relatorios', 'Voltar'] %}
+
+{% include 'templates/menu.twig' with menu %}
+
+{% endblock %} {% block content %}
+
+
+{# aqui começa a brincadeira #}
+
+<h1>Olá amiginho, faça algo legal aqui</h1>
+<hr>
+<table class="table">
+	<legend>Balanço Mensal</legend>
+	<thead>
+		<tr>
+			<th>Mês/Ano</th>
+			<th>Produção</th>
+		</tr>
+	</thead>
+	<tbody>
+		<tr>
+			<td>Agosto/2017</td>
+			<td>1896</td>
+		</tr>
+	</tbody>
+</table>
+
+
+<canvas id="yearProduction" width="auto" height="auto"></canvas>
+
+
+{# aqui termina a brincadeira #}
+{% endblock %}
+{% block cjs %}
+<!-- chart.js -->
+<script src="/assets/js/sys/Chart.min.js"></script>
+<script type="text/javascript" src="/assets/js/chart.js"></script>
+{% endblock %}

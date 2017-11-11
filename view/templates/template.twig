@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <title>{% block title %}{% endblock %}</title>
+    <!--
+Neaty HTML Template
+http://www.templatemo.com/tm-501-neaty
+-->
+<!-- load stylesheets -->
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:300,400">
+<!-- Google web font "Open Sans" -->
+
+<link rel="stylesheet" type="text/css" href="{{ base_url() }}/assets/css/bootstrap-grid.min.css">
+<link rel="stylesheet" type="text/css" href="{{ base_url() }}/assets/css/bootstrap-reboot.min.css">
+<link rel="stylesheet" href="{{ base_url() }}/assets/css/bootstrap.min.css">
+<!-- Bootstrap style -->
+
+<link rel="stylesheet" href="{{ base_url() }}/assets/css/magnific-popup.css">
+<!-- Magnific pop up style, http://dimsemenov.com/plugins/magnific-popup/ -->
+
+<link rel="stylesheet" href="{{ base_url() }}/assets/css/templatemo-style.css">
+
+<!-- jQuery-ui -->
+<link rel="stylesheet" type="text/css" href="/assets/css/jquery-ui/jquery-ui.min.css">
+<link rel="stylesheet" type="text/css" href="/assets/css/jquery-ui/jquery-ui.structure.min.css">
+<link rel="stylesheet" type="text/css" href="/assets/css/jquery-ui/jquery-ui.theme.min.css">
+
+<!-- font awesome -->
+<link rel="stylesheet" type="text/css" href="/assets/css/fontawesome/css/font-awesome.min.css">
+
+<!-- Flavicon -->
+<link rel="apple-touch-icon" sizes="57x57" href="{{ base_url() }}/assets/img/flavicon/apple-icon-57x57.png">
+<link rel="apple-touch-icon" sizes="60x60" href="{{ base_url() }}/assets/img/flavicon/apple-icon-60x60.png">
+<link rel="apple-touch-icon" sizes="72x72" href="{{ base_url() }}/assets/img/flavicon/apple-icon-72x72.png">
+<link rel="apple-touch-icon" sizes="76x76" href="{{ base_url() }}/assets/img/flavicon/apple-icon-76x76.png">
+<link rel="apple-touch-icon" sizes="114x114" href="{{ base_url() }}/assets/img/flavicon/apple-icon-114x114.png">
+<link rel="apple-touch-icon" sizes="120x120" href="{{ base_url() }}/assets/img/flavicon/apple-icon-120x120.png">
+<link rel="apple-touch-icon" sizes="144x144" href="{{ base_url() }}/assets/img/flavicon/apple-icon-144x144.png">
+<link rel="apple-touch-icon" sizes="152x152" href="{{ base_url() }}/assets/img/flavicon/apple-icon-152x152.png">
+<link rel="apple-touch-icon" sizes="180x180" href="{{ base_url() }}/assets/img/flavicon/apple-icon-180x180.png">
+<link rel="icon" type="image/png" sizes="192x192"  href="{{ base_url() }}/assets/img/flavicon/android-icon-192x192.png">
+<link rel="icon" type="image/png" sizes="32x32" href="{{ base_url() }}/assets/img/flavicon/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="96x96" href="{{ base_url() }}/assets/img/flavicon/favicon-96x96.png">
+<link rel="icon" type="image/png" sizes="16x16" href="{{ base_url() }}/assets/img/flavicon/favicon-16x16.png">
+<link rel="manifest" href="/manifest.json">
+<meta name="msapplication-TileColor" content="#ffffff">
+<meta name="msapplication-TileImage" content="/ms-icon-144x144.png">
+<meta name="theme-color" content="#ffffff">
+
+<style type="text/css">
+input[type=number]::-webkit-inner-spin-button, 
+input[type=number]::-webkit-outer-spin-button { 
+  -webkit-appearance: none; 
+  -moz-appearance: none;
+  margin: 0; 
+}
+</style>
+
+<!-- custom css for page -->
+{% block css %}{% endblock %}
+
+  <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+  <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+<!--[if lt IE 9]>
+<script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
+<script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+<![endif]-->
+</head>
+
+<body>
+  <nav height="20px" class="navbar navbar-expand-sm navbar-dark fixed-top bg-dark" style="z-index: 1">
+    <a class="navbar-brand" href="#">Urnart</a>
+
+    <div id="dropdownListResponsive" class="dropdown-responsive">
+      <button  class="navbar-toggler navbar-toggler-right rounded-circle img-fluid dropdown-responsive">
+        <img height="16px" src="/assets/img/njn.jpg">
+      </button>
+      <div class="dropdown-content-responsive">
+
+        {% if auth.check %}
+          <a href="{{ path_for('changepassword') }}">Change password</a>
+          <a href="{{ path_for('auth.signout') }}">Logout</a>
+        {% else  %}
+          <a href="{{ path_for('auth.signin') }}">Sing in</a>
+          <a href="{{ path_for('auth.signup') }}">Sign up</a>
+        {% endif %}  
+        
+      </div>
+    </div>
+    <div class="collapse navbar-collapse" id="navbarResponsive">
+      <ul class="navbar-nav ml-auto">
+        <li class="nav-item">
+
+          <div id="dropdownList" class="dropdown">
+            <button class="dropbtn">{{ auth.user.userName ? auth.user.userName :  'Convidado' }}</button>
+
+            <div class="dropdown-content">
+
+              {% if auth.check %}
+                <a href="{{ path_for('changepassword') }}">Change password</a>
+                <a href="{{ path_for('auth.signout') }}">Logout</a>
+              {% else  %}
+                <a href="{{ path_for('auth.signin') }}">Sing in</a>
+                <a href="{{ path_for('auth.signup') }}">Sign up</a>
+              {% endif %}  
+
+            </div>
+          </div>
+        </li>
+        <li class="nav-item" style="margin-left: 20px">
+          <img class="rounded-circle img-fluid" width="46px" src="/assets/img/njn.jpg">
+        </li>
+      </ul>
+    </div>
+  </nav>
+
+  <div class="container-fluid">
+    <div class="row">
+      <div class="tm-left-right-container">
+        <!-- Left column: logo and menu -->
+        <div class="tm-blue-bg tm-left-column">
+          <div class="tm-logo-div text-center">
+            <a href="/">
+              <img src="/assets/sys_img/logov2.png" alt="Logo">
+              <h1 class="tm-site-name">Urnart</h1>
+            </a>
+            <div id="responsiveMenu">
+              <i class="fa fa-bars fa-2x"></i>
+            </div>
+          </div>
+          <div id="responsiveDropDownMenu">
+            <nav class="tm-main-nav">
+              {% block menu %} {% endblock %}
+              </nav>
+            </div>
+          </div>
+          <!-- Left column: logo and menu -->
+          <!-- Right column: content -->
+          <div class="tm-right-column">
+
+            <div class="tm-content-div">
+
+              <!-- Welcome section -->
+              <section id="welcome" class="tm-section">
+
+                {% include 'templates/flashMessage.twig' %}
+
+                {% block content %} {% endblock %}
+
+                </section>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <script src="/assets/js/sys/jquery.js"></script>
+      <!-- jquery ui -->
+      <script src="/assets/js/sys/jquery-ui.min.js"></script>
+      <script src="/assets/js/functions.js"></script>
+
+      <!-- custom js -->
+      {% block cjs %} {% endblock %}
+
+        <script type="text/javascript">
+        function goBack() {
+          window.history.back();
+        }    
+        
+        $(function () {
+
+          $( "#responsiveMenu" ).click(function() {
+            $( "#responsiveDropDownMenu" ).animate({
+              opacity: 1,
+              left: "+=50",
+              height: "toggle"
+            }, 500);
+          })
+
+          $(window).on('resize', function () {
+            if ($(window).width() >= 992) {
+              $('#responsiveDropDownMenu').css('display', 'block');
+            }
+
+            if ($(window).width() < 992) {
+              $('#responsiveDropDownMenu').css('display', 'none');
+            }              
+          })
+        })
+        </script>
+      </body>
+      </html>

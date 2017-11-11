@@ -1,0 +1,48 @@
+{% extends 'templates/template.twig' %}
+
+{% block title %} Sistema {% endblock %}
+
+{% set prefix = 'registros' %}
+{% block menu %} {% set menu = [ 'Produto', 'Tamanho', 'Descrição', 'Clientes','Voltar'] %}
+{% include 'templates/menu.twig' with menu %} {% endblock %}
+
+{% block content %}
+<table class="table">
+  <thead>
+    <th colspan="3">
+      <center>Adicionar Registro</center>
+    </th>
+  </thead>
+  <tbody>
+    {% set rec = ['Produto', 'Tamanho', 'Descrição', 'Clientes'] %}
+    {% for r in rec %}
+    <tr>
+      <td>
+        <a href="/registros/{{ r | slug }}" class="btn btn-info btn-lg btn-block">{{ r }}</a>
+      </td>
+    </tr>
+    {% endfor %}
+  </tbody>
+</table>
+
+<hr>
+
+<table class="table">
+  <thdead>
+    <tr>
+      <th><center>Id</center></th>
+      <th><center>Nome</center></th>
+      <th><center>Valor</center></th>
+    </tr>
+  </thdead>
+  <tbody class="prod">
+    {% for prod in product %}
+    <tr>
+      <td><center>{{ prod.id }}</center></td>
+      <td><center>{{ prod.getDescription }} {{ prod.getHeight | height}}</center></td>
+      <td><center>{{ prod.price | money }}</center></td>
+    </tr>
+    {% endfor %}
+  </tbody>
+</table>
+{% endblock %}

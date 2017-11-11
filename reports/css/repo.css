@@ -1,0 +1,88 @@
+* {
+	font-family: 'Roboto', roboto;
+}
+
+#header {
+	font-weight: bold;
+}
+
+.cnpj {
+	font-size: 15px;
+}
+
+.hcontent {
+	margin-left:50px;
+	font-size: 30px;
+	float: right;
+}
+
+.logo {
+	height: 75px;
+	width: 185px;
+	float: left;
+}
+
+#content {
+	font-size: 14px;
+	text-align: center;
+}
+
+.n {
+	font-weight: bold;
+	padding: 0 70 10 70;
+	text-align: center;
+}
+
+.i {
+	font-weight: bold;
+	padding: 0 40 20 0;
+}
+
+.c {
+	display: block;
+	text-justify: center;
+	margin-right: 210px;
+	font-weight: bold;
+}
+
+.cContent {
+	margin: 20 0 10 0;
+}
+
+.ntable {
+	margin-bottom: -10px;
+}
+
+.client-city {
+	font-size: 18px;
+	font-weight: bolder;
+	margin-bottom: 5px;
+}
+
+.client-name {
+	font-size: 17px;
+	position: left;
+	margin-bottom: 10px;
+}
+
+.comingInfo .i {
+	margin: 0 50 0 0;
+	position: left;
+}
+
+#contentHeader {
+	padding-top: 5px;
+	margin-bottom: 41.25px;
+}
+
+hr {
+	margin-bottom: 12px;
+	border-color: black;
+}
+/**
+by footer
+*/
+#foot {
+	text-align: center;
+	font-size: 15px;
+}

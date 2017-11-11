@@ -1,0 +1,66 @@
+{% extends 'templates/template.twig' %} 
+
+{% block title %} Sistema - Inicio {% endblock %}
+
+    {% block menu %} 
+
+        {% set prefix = 'producao' %}
+
+            {% set menu = ['Inicio', 'Adicionar', 'Relatorios', 'Voltar'] %}
+
+                {% include 'templates/menu.twig' with menu %}
+
+            {% endblock %} {% block content %}
+
+            {# aqui começa a brincadeira #}
+
+            <h1>Olá amiginho, faça algo legal aqui</h1>
+            <hr>
+            <div class="tm-row-height col-md-4">
+                <input type="text" id="datePicker" class="form-control noKey" placeholder="Aperte aqui para seleciona data">
+            </div>
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>Produto</th>
+                        <th>Quantidade</th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody id="el">
+                    <tr>
+                        <td width="25%">
+                            <select class="form-control model">
+                                <option selected disabled>Selecione uma opção</option>
+                                {% for p in prod %}
+                                 <option value="{{ p.getId }}">{{ p.getDescription }} {{ p.getHeight }}</option> 
+                             {% endfor %}
+                         </select>
+                     </td>
+                     <td width="20%" class="qnt">
+                     </td>
+                     <td width="15%">
+                        <span id="addNewLine" style="cursor: pointer;" class="badge badge-info">+</span><span style="word-spacing: 10px"> </span><span id="removeLine" style="cursor: pointer;" class="badge badge-danger">x</span>
+                    </td>
+                </tr>
+            </tbody>
+            <tfoot>
+                <tr>
+                    <td colspan="2" style="text-align: right;">Total</td>
+                    <td id="total">0</td>
+                </tr>
+            </tfoot>
+        </table>
+        <hr>
+        <button class="btn btn-block btn-primary btn-lg" id="enviarProd">Enviar</button>
+
+        {# aqui termina a brincadeira #}
+    {% endblock %}
+
+    {# bibliotecas javascript #}
+    {% block cjs %}
+        <script type="text/javascript" src="/assets/js/sys/jquery.mask.min.js"></script>
+        <script type="text/javascript" src="/assets/js/addProduction.js"></script>
+        <script src="/assets/js/sys/axios.min.js"></script>
+        <script type="text/javascript" src="/assets/js/ajax.js"></script>
+    {% endblock %}

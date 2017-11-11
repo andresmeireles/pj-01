@@ -1,0 +1,53 @@
+<ul class="tm-main-nav-ul">
+  {% if prefix != null %}
+
+    {% for m in menu %}
+
+      <li class="tm-nav-item">
+        {% if m == 'Inicio' %}        
+
+          <a href="/" class="tm-nav-item-link">{{ m }}</a>          
+
+        {% else %}
+
+          {% if m == 'Voltar' %}
+
+            <a href="/{{ m | slug }}" onclick="goBack()" class="tm-nav-item-link">{{ m }}</a>
+
+          {% else %}
+
+            <a href="/{{ prefix }}/{{ m | slug }}" class="tm-nav-item-link">{{ m }}</a>
+
+          {% endif %}
+        {% endif %}
+        </li>
+
+      {% endfor %}
+
+    {% else %}
+
+      {% for m in menu %}
+
+        <li class="tm-nav-item">
+          {% if m == 'Inicio' %}        
+
+            <a href="/" class="tm-nav-item-link">{{ m }}</a>          
+
+          {% else %}
+
+            {% if m == 'Voltar' %}
+
+              <a href="/{{ m | slug }}" onclick="goBack()" class="tm-nav-item-link">{{ m }}</a>
+
+            {% else %}
+
+              <a href="{{ prefix }}/{{ m | slug }}" class="tm-nav-item-link">{{ m }}</a>
+
+            {% endif %}
+          {% endif %}
+        </li>
+      {% endfor %}
+
+    {% endif %}
+
+  </ul>
