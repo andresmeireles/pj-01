@@ -10,12 +10,25 @@ class ReportController extends Controller
     
     public function createTravelReport($request, $response)
     {
-        return $this->renderer->render($response, '/reports/report/travel.twig');
+        $report = str_rot13('Travel');
+        return $this->renderer->render($response, '/reports/report/travel.twig', 
+        [
+            'report' => $report,
+        ]);
+    }
+
+    public function createTagReport($request, $response)
+    {
+        $report = str_rot13('Tag');
+        return $this->renderer->render($response, '/reports/report/tag.twig', [
+            'report' => $report,
+        ]);
     }
     
     public function create($request, $response) 
     {
-        $report = new \App\Reports\TravelReport($this->report);
+        $class = '\App\Reports\\'.str_rot13($request->getParams()['report']).'Report';
+        $report = new $class($this->report);
         return $report->create($request->getParams());
     }
     

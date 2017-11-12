@@ -41,6 +41,8 @@ class TravelReport
     
     private function createBody(array $data)
     {
+        unset($data['report']);
+        unset($data['driver']);
         $body = '
         <div id="content">'.
         '<div id="contentHeader">'.

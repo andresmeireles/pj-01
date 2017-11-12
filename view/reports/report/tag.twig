@@ -22,32 +22,33 @@
         <!-- form-group -->
     </div>
     <!-- form-row -->
-    
-    <div id='1' class="form-row">
-            Motorista: &nbsp;<input type="text" name="driver" class="form-control col-md-10" placeholder="Nome do Motorista" required>
-    </div>
+
     <!-- create area -->
     <div id='1' class="form-row create-area">
-        <div class="form-group col-md-5">
+        <div class="form-group col-md-4">
             <label for="cliente">Cliente</label>
             <input type="text" name="info1[customer]" class="form-control col" placeholder="Cliente" required>
         </div>
         <!-- form-group -->
-        <div class="form-group col-md-4">
+        <div class="form-group col-md-2">
             <label for="cliente">Cidade</label>
             <input type="text" name="info1[city]" class="form-control col" placeholder="Cidade" required>
         </div>
-        <!-- form-group 
-            usar no futuro quando for criar o das tags
+        <!-- form-group --> 
             <div class="form-group col-md-1">
                 <label for="cliente">QNT</label>
                 <input type="number" name="info1[amount]" class="form-control col" placeholder="Qnt" required>
-            </div> -->
+            </div>
             <div class="form-group col-md-3">
                 <label for="actions">Ações</label><br>
                 <button class="form-contol btn btn-info add">Add</button>
                 <button class="form-contol btn btn-danger rm">Remove</button>
             </div>
+            <div class="form-group col-md-1">
+                <label for="actions">Casado</label><br>
+                <input type="checkbox" name="Casado" placeholder="casado"> casado?
+            </div>
+            
             <!-- form-group -->
         </div>
         <!--form-row -->
@@ -57,5 +58,5 @@
     {# aqui termina a brincadeira #}
     {% endblock %}
     {% block cjs %}
-    <script src="/assets/js/reports/travel.js"></script>
+    <script src="/assets/js/reports/tag.js"></script>
     {% endblock %}  

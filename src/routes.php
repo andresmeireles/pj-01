@@ -41,7 +41,8 @@ $app->group('', function () use ($app) {
     
     //relatorios
     $app->get('/relatorios[/]', 'ReportController');
-    $app->get('/relatorios/createTravelReport', 'ReportController:createTravelReport');
+    $app->get('/relatorios/viagem', 'ReportController:createTravelReport');
+    $app->get('/relatorios/etiqueta', 'ReportController:createTagReport');
     $app->post('/create', 'ReportController:create')->setName('create');
 
     // produção
