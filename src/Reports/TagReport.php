@@ -53,7 +53,7 @@ class TagReport implements ReportInterface
                 $tags['customer'].
                 '</div>'.
                 '<div class="city">'.
-                $tags['city'].
+                $tags['city'].' '.$tags['state'].
                 '</div>'.
                 '</div>'.
                 '<div class="volumes">'.
