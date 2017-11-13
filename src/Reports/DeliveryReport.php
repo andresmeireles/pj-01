@@ -14,7 +14,9 @@ class Deliveryreport implements Reportinterface
 
 	public function create(array $data) 
 	{
+        $mpdf = $this->report;
 
+        
 	}
 
 	public function createBody(array $data)
