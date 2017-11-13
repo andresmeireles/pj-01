@@ -13,16 +13,16 @@
 <h1>Relatório de Viagem</h1>
 <hr>
 
-<form action="{{ path_for('create') }}" method="POST">
+<form action="{{ path_for('create') }}" method="POST" target="_blank" >
     
     <div class="form-row">
         <div class="form-group col-md-12">
-            <input type="submit" class="btn btn-primary btn-lg btn-block" value="Criar Relatório">
+            <input type="submit" id="submit" class="btn btn-primary btn-lg btn-block" value="Criar Relatório">
         </div>
         <!-- form-group -->
     </div>
     <!-- form-row -->
-
+    
     <!-- create area -->
     <div id='1' class="form-row create-area">
         <div class="form-group col-md-4">
@@ -35,28 +35,30 @@
             <input type="text" name="info1[city]" class="form-control col" placeholder="Cidade" required>
         </div>
         <!-- form-group --> 
-            <div class="form-group col-md-1">
-                <label for="cliente">QNT</label>
-                <input type="number" name="info1[amount]" class="form-control col" placeholder="Qnt" required>
-            </div>
-            <div class="form-group col-md-3">
-                <label for="actions">Ações</label><br>
-                <button class="form-contol btn btn-info add">Add</button>
-                <button class="form-contol btn btn-danger rm">Remove</button>
-            </div>
-            <div class="form-group col-md-1">
-                <label for="actions">Casado</label><br>
-                <input type="checkbox" name="Casado" placeholder="casado"> casado?
-            </div>
-            
-            <!-- form-group -->
+        <div class="form-group col-md-1">
+            <label for="cliente">QNT</label>
+            <input type="number" name="info1[amount]" class="form-control col" placeholder="Qnt" required>
         </div>
-        <!--form-row -->
-        <input type="hidden" name="report" value='{{ report }}'>
-        <!-- /create area -->
-    </form>
-    {# aqui termina a brincadeira #}
-    {% endblock %}
-    {% block cjs %}
-    <script src="/assets/js/reports/tag.js"></script>
-    {% endblock %}  
+        <div class="form-group col-md-3" style="max-width: 20%">
+            <label for="actions">Ações</label><br>
+            <input type="button" class="btn btn-info add" value="Add">
+            <input type="button" class="btn btn-danger rm" value="Remove">
+        </div>  
+        <!-- form-group -->
+        <div class="form-group col-md-2">
+            <label for="Casado">Casado</label>
+            <label class="form-check-label">
+                <input class="form-check-input" name="info1[casado]" type="checkbox" value="true"> Casado
+            </label>
+        </div>
+    </div>
+    <!--form-row -->
+    <input type="hidden" name="report" value='{{ report }}'>
+    <!-- /create area -->
+</form>
+
+{# aqui termina a brincadeira #}
+{% endblock %}
+{% block cjs %}
+<script src="/assets/js/reports/tag.js"></script>
+{% endblock %}  

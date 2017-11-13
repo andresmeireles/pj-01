@@ -34,7 +34,6 @@ class TagReport implements ReportInterface
         
         $mpdf->Output();
         exit();
-        
     }
     
     public function createBody(array $data) 
@@ -59,16 +58,15 @@ class TagReport implements ReportInterface
                 '</div>'.
                 '<div class="volumes">'.
                 '<div class="qnt">'.
-                ($i + 1).
+                ($tags['casado'] ? ceil(($i + 1)/2) : $i + 1).
                 '</div>'. 
                 '<div class="vol">vol.'.
-                ' '.$tags['amount'].
+                ' '.($tags['casado'] ? ceil($tags['amount']/2) : $tags['amount']) .
                 '</div>'.
                 '</div>'.
                 '<div style="clear:both"></div>'.
                 '<hr>';
-            }
-            $counter++;
+            }       
         }
         
         return $body;

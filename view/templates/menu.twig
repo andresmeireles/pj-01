@@ -1,25 +1,11 @@
 <ul class="tm-main-nav-ul">
+    <li class="tm-nav-item"><a href="/" class="tm-nav-item-link">Inicio</a></li>
   {% if prefix != null %}
 
-    {% for m in menu %}
+      {% for m in menu %}
 
-      <li class="tm-nav-item">
-        {% if m == 'Inicio' %}        
-
-          <a href="/" class="tm-nav-item-link">{{ m }}</a>          
-
-        {% else %}
-
-          {% if m == 'Voltar' %}
-
-            <a href="/{{ m | slug }}" onclick="goBack()" class="tm-nav-item-link">{{ m }}</a>
-
-          {% else %}
-
+        <li class="tm-nav-item">      
             <a href="/{{ prefix }}/{{ m | slug }}" class="tm-nav-item-link">{{ m }}</a>
-
-          {% endif %}
-        {% endif %}
         </li>
 
       {% endfor %}
@@ -29,25 +15,9 @@
       {% for m in menu %}
 
         <li class="tm-nav-item">
-          {% if m == 'Inicio' %}        
-
-            <a href="/" class="tm-nav-item-link">{{ m }}</a>          
-
-          {% else %}
-
-            {% if m == 'Voltar' %}
-
-              <a href="/{{ m | slug }}" onclick="goBack()" class="tm-nav-item-link">{{ m }}</a>
-
-            {% else %}
-
               <a href="{{ prefix }}/{{ m | slug }}" class="tm-nav-item-link">{{ m }}</a>
-
-            {% endif %}
-          {% endif %}
         </li>
       {% endfor %}
 
     {% endif %}
-
   </ul>

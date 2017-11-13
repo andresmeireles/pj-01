@@ -29,7 +29,8 @@ class ReportController extends Controller
     {
         $class = '\App\Reports\\'.str_rot13($request->getParams()['report']).'Report';
         $report = new $class($this->report);
-        return $report->create($request->getParams());
+        $report->create($request->getParams());
+        return die('mmorreu');//$response->withRedirect($this->router->pathfor(strtolower($request->getParams()['report'])));
     }
     
     public function createReport($request, $response) 

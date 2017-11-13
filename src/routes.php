@@ -41,8 +41,8 @@ $app->group('', function () use ($app) {
     
     //relatorios
     $app->get('/relatorios[/]', 'ReportController');
-    $app->get('/relatorios/viagem', 'ReportController:createTravelReport');
-    $app->get('/relatorios/etiqueta', 'ReportController:createTagReport');
+    $app->get('/relatorios/viagem', 'ReportController:createTravelReport')->setName('travel');
+    $app->get('/relatorios/etiqueta', 'ReportController:createTagReport')->setName('tag');
     $app->post('/create', 'ReportController:create')->setName('create');
 
     // produção
@@ -55,5 +55,5 @@ $app->group('', function () use ($app) {
     // report pages
     $app->get('/producao/relatorios', 'ReportController:index')->setName('report.report');
     $app->get('/producao/createRepo', 'ReportController:createReport');
-})->add('AuthMiddleware');
+});//->add('AuthMiddleware');
 
