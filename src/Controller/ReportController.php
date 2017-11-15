@@ -24,6 +24,16 @@ class ReportController extends Controller
             'report' => $report,
         ]);
     }
+
+    public function createBoardingDeliveryReport($request, $reponse) 
+    {
+        $reportDelivery = str_rot13('Delivery');
+        $reportBoarding = str_rot13('Boarding');
+        return $this->renderer->render($reponse, '/reports/report/boardingDelivery.twig', [
+            'reportDelivery' => $reportDelivery,
+            'reportBoarding' => $reportBoarding,
+        ]);
+    }
     
     public function create($request, $response) 
     {

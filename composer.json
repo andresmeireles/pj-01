@@ -21,8 +21,7 @@
         "slim/flash": "^0.2.0",
         "monolog/monolog": "^1.23",
         "vlucas/phpdotenv": "^2.4",
-        "mpdf/mpdf": "^7.0@RC",
-        "php-di/slim-bridge": "^1.0"
+        "mpdf/mpdf": "^7.0@RC"
     },
 
     "autoload": {

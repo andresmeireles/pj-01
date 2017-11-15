@@ -43,6 +43,7 @@ $app->group('', function () use ($app) {
     $app->get('/relatorios[/]', 'ReportController');
     $app->get('/relatorios/viagem', 'ReportController:createTravelReport')->setName('travel');
     $app->get('/relatorios/etiqueta', 'ReportController:createTagReport')->setName('tag');
+    $app->get('/relatorios/romaneio', 'ReportController:createBoardingDeliveryReport')->setName('boardingDelivery');
     $app->post('/create', 'ReportController:create')->setName('create');
 
     // produção

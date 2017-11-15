@@ -6,7 +6,7 @@ return array(
         'addContentLengthHeader' => false,
 
         'renderer' => array(
-            'template_path' => __DIR__."/../view/",
+            'template_path' => __DIR__."/../resources/",
 
             // twig only
             'filters' => array(

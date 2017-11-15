@@ -1,0 +1,93 @@
+{% extends 'templates/template.twig' %} 
+
+{% block title %} Sistema - Inicio {% endblock %}
+
+{% block menu %} 
+
+{% include 'templates/menus/travel_menu.twig' %}
+{% endblock %} {% block content %}
+
+
+{# aqui começa a brincadeira #}
+
+<h1>Romaneio</h1>
+<hr>
+
+<form action="{{ path_for('create') }}" method="POST" target="_blank" >
+    
+    <div class="form-row">
+        <div class="form-group col-md-6">
+            <input type="submit" id="submit" class="btn btn-primary btn-lg btn-block" value="Embarque">
+        </div>
+        <div class="form-group col"></div>
+        <div class="form-group col-md-2">
+            <label for="Entrega">
+                <input type="radio" name="report" id="" value="{{ reportDelivery }}" required> Entrega</label>
+            </div>
+            <!-- form-group -->
+            <div class="form-group col-md-3">
+                <label for="">
+                    <input type="radio" name="report" id="" value="{{ reportBoarding }}" required> Embarque</label>
+                </div>
+            </div>
+            <!-- form-row -->
+            
+            <!-- create area -->
+            <div id='1' class="form-row create-area">
+                <div class="form-group col-3" style="width: 20%">
+                    <label for="cliente">Cliente</label>
+                    <input type="text" name="info1[customer]" class="form-control " placeholder="Cliente" required>
+                </div>
+                <!-- form-group -->
+                <div class="form-group col" style="width: 20%">
+                    <label for="cliente">Cidade</label>
+                    <input type="text" name="info1[city]" class="form-control  col" placeholder="Cidade" required>
+                </div>
+                <!-- form-group -->
+                <div class="form-group col-1" style="width: 5%;">
+                    <label for="cliente">G</label>
+                    <input type="text" name="info1[gAmount]" class="form-control  col-xs-01" placeholder="QNT" required>
+                </div>
+                <!-- form-group -->
+                <div class="form-group col-1" style="width: 5%;">
+                    <label for="cliente">M</label>
+                    <input type="text" name="info1[mAmount]" class="form-control  col" placeholder="QNT" required>
+                </div>
+                <!-- form-group --> 
+                <div class="form-group col-1" style="width: 5%;">
+                    <label for="cliente">P</label>
+                    <input type="number" name="info1[pAmount]" class="form-control " placeholder="QNT" required>
+                </div>
+                <!-- form-group -->
+                <div class="form-group col" style="width: 10%;">
+                    <label for="cliente">PG</label>
+                    <select name="info1[formPg]" id="" class="form-control " required>
+                        <option selected disabled>PG</option>
+                        <option value="Á vista">A vista</option>
+                        <option value="Boleto">Boleto</option>
+                        <option value="Cheque">Cheque</option>
+                    </select>
+                </div>
+                <!-- form-group -->
+                <div class="form-group col" style="width: 10%;">
+                    <label for="cliente">Frete</label>
+                    <input type="number" name="info1[ship]" class="form-control " placeholder="R$" required>
+                </div>
+                <!-- form-group -->
+                <div class="form-group col-1" style="max-width: 20%">
+                    <label for="actions">Ações</label><br>
+                    <input type="button" class="btn btn-sm btn-info add" value="+">
+                    <input type="button" class="btn btn-sm btn-danger rm" value="X">
+                </div>  
+                <!-- form-group -->
+            </div>
+            <!--form-row -->
+            
+            <!-- /create area -->
+        </form>
+        
+        {# aqui termina a brincadeira #}
+        {% endblock %}
+        {% block cjs %}
+        <script src="/assets/js/reports/boardingDevilvery.js"></script>
+        {% endblock %}  

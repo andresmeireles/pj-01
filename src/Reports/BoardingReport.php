@@ -35,17 +35,19 @@ class BoardingReport implements ReportInterface
     
 	public function createBody(array $data)
 	{
+        unset($data['report']);
+
 		$body = '<table class="table">'.
 		'<caption id="titulo" style="font-size: 40px">ROMANEIO DE ENTREGA</caption>'.
 		'<thead style="border-bottom: 4px solid black">'.
-        '<tr align="left" class="head">'.
-        '<th colspan="9" id="headInfo">'.
-        '<span>Saida:</span>'.
-        '<span>Data:</span>'.
-        '<span>KM:</span>'.
-        '<span>Chegada:</span>'.
-        '<span>Data:</span>'.
-        '<spa>KM:</span>'.
+        '<tr class="head">'.
+        '<th colspan="7" id="headInfo">'.
+        '<span class="c">Saida:&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;</span>'.
+        '<span class="c">Data:&emsp;&emsp;&emsp;&emsp;&emsp;</span>'.
+        '<span class="c">KM:&emsp;&emsp;&emsp;&emsp;&emsp;</span>'.
+        '<span class="c">Chegada:&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;</span>'.
+        '<span class="c">Data:&emsp;&emsp;&emsp;&emsp;&emsp;</span>'.
+        '<span class="c">KM:&emsp;&emsp;&emsp;&emsp;&emsp;</span>'.
         '</th>'.
         '</tr>'.
         '<tr class="info">'.
@@ -56,36 +58,41 @@ class BoardingReport implements ReportInterface
         '<th width="6%">M</th>'.
         '<th width="5%">P</th>'.
         '<th width="6%">TOTAL</th>'.
-        '<th width="10%">FORM. PAG</th>'.
-        '<th width="11%">FRETE</th>'.
         '</tr>'.
 		'</thead>'.
 		'<tbody class="body">';
 		
-		$counter = 0;
+        $counter = 0;
+        $mTotal = 0;
+        $pTotal = 0;
+        $gTotal = 0;
         
 		foreach ($data as $customer) {
+            $mTotal += $customer['mAmount'];
+            $pTotal += $customer['pAmount'];
+            $gTotal += $customer['gAmount'];
+
 			$body .= '<tr>'.
-            '<td widtd="3%">'.
-            $cpunter++. //N
+            '<td widtd="3%" align="center">'.
+            ++$counter. //N
             '</td>'.
-            '<td widtd="28%">'.
-            $customer.// Cidade
+            '<td widtd="28%" align="center">'.
+            $customer['customer'].// Cliente
             '</td>'.
-            '<td widtd="22%">'.
-            $customer.//Cliente
+            '<td widtd="22%" align="center">'.
+            $customer['city'].//Cidade
             '</td>'.
-            '<td widtd="6%">'.
-            $customer.//G
+            '<td widtd="6%" align="center">'.
+            $customer['gAmount'].//G
             '</td>'.
-            '<td widtd="6%">'.
-            $customer.//M
+            '<td widtd="6%" align="center">'.
+            $customer['mAmount'].//M
             '</td>'.
-            '<td widtd="5%">'.
-            $customer.//P
+            '<td widtd="5%" align="center">'.
+            $customer['pAmount'].//P
             '</td>'.
-            '<td widtd="6%">'.
-            $customer.//TOTAL
+            '<td widtd="6%" align="center">'.
+            ($customer['pAmount'] + $customer['mAmount'] + $customer['gAmount']).//TOTAL
             '</td>'.
             '</tr>';
 		}
@@ -95,17 +102,17 @@ class BoardingReport implements ReportInterface
         '<tr class="foot">'.
         '<th colspan="3">'.
         '</th>'.
-        '<th width="6%">'.
-        $total. //total G
+        '<th width="6%" align="center">'.
+        $gTotal. //total G
         '</th>'.
-        '<th width="6%">'.
-        $total. //total m
+        '<th width="6%" align="center">'.
+        $mTotal. //total m
         '</th>'.
-        '<th width="5%">'.
-        $total. //total P
+        '<th width="5%" align="center">'.
+        $pTotal. //total P
         '</th>'.
-        '<th width="6%">'.
-        $total. //soma total
+        '<th width="6%" align="center"  >'.
+        ($pTotal + $mTotal + $gTotal). //soma total
         '</th>'.
         '</tr>'.
 		'</tfoot>'.
