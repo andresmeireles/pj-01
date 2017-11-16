@@ -2,18 +2,30 @@
 namespace App\Reports;
 
 use \Mpdf\Mpdf;
+use \Respect\Validation\Validator as v;
+use \App\Validation\ValidatorJson;
 
 class TagReport implements ReportInterface
 {
     private $report;
+    private $validator;
     
-    function __construct(Mpdf $mpdf)
+    function __construct(Mpdf $mpdf, ValidatorJson $validator)
     {
         $this->report = $mpdf;
+        $this->validator = $validator;
     }
     
     public function create(array $data)
     {
+        unset($data['report']);
+        
+        foreach ($data as $datas) {
+            if (!$this->validate($datas)) {
+                return $this->validator->failed();
+            }
+        }
+        
         $mpdf = $this->report;
         
         $mpdf->showImageErrors = true;
@@ -38,12 +50,10 @@ class TagReport implements ReportInterface
     
     public function createBody(array $data) 
     {
-        unset($data['report']);
-        
         $body = '';
         
         $counter = 1;
-
+        
         foreach ($data as $tags) {
             for ($i=0; $i < $tags['amount']; $i++) { 
                 $body .= '<hr>'.
@@ -71,4 +81,19 @@ class TagReport implements ReportInterface
         
         return $body;
     }
-}
+    
+    public function validate(array $data)
+    {
+        $validator = $this->validator->validate($data, [
+            'customer' => v::stringType()->notEmpty(),
+            'city' => v::stringType()->not(v::numeric())->notEmpty(),
+            'amount' => v::numeric()->positive()->notEmpty()->noWhitespace()
+            ]);
+            
+            if ($validator->failed()) {
+                return false;
+            }
+            
+            return true;
+        }
+    }
