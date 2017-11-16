@@ -19,12 +19,23 @@ $(function () {
         
         newRow.after(newRowContent);
     }
-
+    
+    $(document).on('keydown', '.num', notNegative);
+    
     $(document).on('click', '.rm', removeRow);
-
+    
+    function notNegative(e) {
+        if (e.keyCode == 38 || e.keyCode == 40 || e.keyCode == 189) {
+            console.log('esse caractere não é permitido');
+            e.preventDefault();
+        }
+    }
+        
     function removeRow(e) {
         e.preventDefault();
         var row = $(this).closest('.create-area');
         row.remove();
     }
+    
+    
 });

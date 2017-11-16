@@ -2,19 +2,36 @@
 namespace App\Reports;
 
 use \Mpdf\Mpdf;
+use \Respect\Validation\Validator as v;
+use \App\Validation\ValidatorJson;
 
 class Deliveryreport implements ReportInterface
 {
-	private $report;
-
-	function __construct(Mpdf $report)
+    private $report;
+    private $validator;
+    
+	function __construct(Mpdf $report, ValidatorJson $validator)
 	{
-		$this->report = $report;
+        $this->report = $report;
+        $this->validator = $validator;
 	}
-
+    
 	public function create(array $data) 
 	{
-
+        unset($data['report']);
+        
+        foreach ($data as $customer) {
+            $fatalError = false;
+            if (!$this->validate($customer)) {
+                $fatalError = true;
+                return $this->validator->failed();
+            }
+            
+            if ($fatalError) {
+                die('Você errou em alguma coisa');
+            }
+        }
+        
         $mpdf = $this->report;
         
         $css = file_get_contents(__DIR__.'/../../reports/css/romaneio.css');
@@ -33,21 +50,19 @@ class Deliveryreport implements ReportInterface
         $mpdf->Output();
         exit();
 	}
-
+    
 	public function createBody(array $data)
 	{
-        unset($data['report']);
-
 		$body = '<table class="table">'.
 		'<caption id="titulo" style="font-size: 40px">ROMANEIO DE ENTREGA</caption>'.
 		'<thead style="border-bottom: 4px solid black">'.
         '<tr align="left" class="head">'.
         '<th colspan="9" id="headInfo">'.
         '<span class="c">Saida:&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;</span>'.
-        '<span class="c">Data:&emsp;&emsp;&emsp;&emsp;&emsp;</span>'.
+        '<span class="c">Hora:&emsp;&emsp;&emsp;&emsp;&emsp;</span>'.
         '<span class="c">KM:&emsp;&emsp;&emsp;&emsp;&emsp;</span>'.
         '<span class="c">Chegada:&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;</span>'.
-        '<span class="c">Data:&emsp;&emsp;&emsp;&emsp;&emsp;</span>'.
+        '<span class="c">Hora:&emsp;&emsp;&emsp;&emsp;&emsp;</span>'.
         '<span class="c">KM:&emsp;&emsp;&emsp;&emsp;&emsp;</span>'.
         '</th>'.
         '</tr>'.
@@ -72,11 +87,12 @@ class Deliveryreport implements ReportInterface
         $sTotal = 0;
         
 		foreach ($data as $customer) {
+            
             $mTotal += $customer['mAmount'];
             $pTotal += $customer['pAmount'];
             $gTotal += $customer['gAmount'];
             $sTotal += $customer['ship']; 
-
+            
 			$body .= '<tr>'.
             '<td widtd="3%">'.
             ++$counter. //N
@@ -134,5 +150,24 @@ class Deliveryreport implements ReportInterface
         '</table>';
         
         return $body;
-	}
+    }
+    
+    public function validate(array $data)
+    {
+        $validator = $this->validator->validate($data, [
+            'customer' => v::stringType()->notEmpty(),
+            'city' => v::stringType()->not(v::numeric())->notEmpty(),
+            'gAmount' => v::numeric()->positive()->notEmpty()->noWhitespace(),
+            'mAmount' => v::numeric()->positive()->notEmpty()->noWhitespace(),
+            'pAmount' => v::numeric()->positive()->notEmpty()->noWhitespace(),
+            'formPg' => v::stringType()->not(v::numeric())->notEmpty(),
+            'ship' => v::numeric()->positive()->notEmpty()->noWhitespace()
+        ]);
+            
+        if ($validator->failed()) {
+            return false;
+        }
+            
+        return true;
+    }
 }

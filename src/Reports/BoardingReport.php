@@ -2,18 +2,36 @@
 namespace App\Reports;
 
 use \Mpdf\Mpdf;
+use \Respect\Validation\Validator as v;
+use \App\Validation\ValidatorJson;
 
 class BoardingReport implements ReportInterface
 {
 	private $report;
-    
-	function __construct(Mpdf $report)
+    private $validator;
+
+	function __construct(Mpdf $report, ValidatorJson $validator)
 	{
-		$this->report = $report;
+        $this->report = $report;
+        $this->validator = $validator;
 	}
     
 	public function create(array $data)
 	{
+        unset($data['report']);
+        
+        foreach ($data as $customer) {
+            $fatalError = false;
+            if (!$this->validate($customer)) {
+                $fatalError = true;
+                return $this->validator->failed();
+            }
+            
+            if ($fatalError) {
+                die('Você errou em alguma coisa');
+            }
+        }
+        
 		$mpdf = $this->report;
         
         $css = file_get_contents(__DIR__.'/../../reports/css/romaneio.css');
@@ -119,5 +137,24 @@ class BoardingReport implements ReportInterface
         '</table>';
         
         return $body;
-	}
+    }
+    
+    public function validate(array $data)
+    {
+        $validator = $this->validator->validate($data, [
+            'customer' => v::stringType()->notEmpty(),
+            'city' => v::stringType()->not(v::numeric())->notEmpty(),
+            'gAmount' => v::numeric()->positive()->notEmpty()->noWhitespace(),
+            'mAmount' => v::numeric()->positive()->notEmpty()->noWhitespace(),
+            'pAmount' => v::numeric()->positive()->notEmpty()->noWhitespace(),
+            'formPg' => v::stringType()->not(v::numeric())->notEmpty(),
+            'ship' => v::numeric()->positive()->notEmpty()->noWhitespace()
+        ]);
+            
+        if ($validator->failed()) {
+            return false;
+        }
+            
+        return true;
+    }
 }
