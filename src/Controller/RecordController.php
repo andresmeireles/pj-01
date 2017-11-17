@@ -19,7 +19,7 @@ class RecordController
 
     public function __invoke($request, $response)
     {
-        $prod = $this->db->getRepository(Product::class)->findAll();
+        $prod = $this->db->getRepository(Product::class)->findAll() ?? '';
 
         $this->view->render($response, 'record.twig', [
             'product' => $prod
@@ -35,7 +35,7 @@ class RecordController
         $prod = $productMapper->getRegister(['description' => 'ASC']);
         $model = $descriptionMapper->getRegister(['description' => 'ASC']);
 
-        $this->view->render($response, 'add_product.twig', [
+        $this->view->render($response, 'register/product.twig', [
             'product' => $prod,
             'model' => $model,
             'entity' => $entity,
@@ -61,7 +61,7 @@ class RecordController
 
         $entity = str_rot13('height');
 
-        $this->view->render($response, 'add_height.twig', [
+        $this->view->render($response, 'register/height.twig', [
             'heights' => $height,
             'entity' => $entity
         ]);
@@ -73,7 +73,7 @@ class RecordController
 
         $entity = str_rot13('description');
 
-        $this->view->render($response, 'add_description.twig', [
+        $this->view->render($response, 'register/description.twig', [
             'desc' => $description,
             'entity' => $entity
         ]);

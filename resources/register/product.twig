@@ -9,9 +9,8 @@
 {% endblock %}
 
 {% block menu %} 
-{% set prefix = 'registros' %}
-{% set menu = [ 'Produto', 'Tamanho', 'Descrição', 'Clientes', 'Voltar'] %}
-{% include 'templates/menu.twig' with menu %} 
+
+{% include "/templates/menus/registerMenu.twig" %}
 
 {% endblock %}
 

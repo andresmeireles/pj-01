@@ -32,8 +32,8 @@ $app->group('', function () use ($app) {
     $app->get('/getInfo/{id}', 'RecordController:update');
     $app->post('/update[/]', 'RecordController:update');
     
-    $app->post('/insert', 'RecordController:insert');    
-    $app->post('/remove', 'RecordController:remove');
+    $app->post('/action', 'RecordController:insert');    
+    $app->delete('/action', 'RecordController:remove');
     $app->post('/getReg', 'RecordController:getRegistry');
     $app->get('/getSingleRegistry/{entity}/{id}', 'RecordController:getSingleRegistry');
     

@@ -106,7 +106,7 @@ var insertData = (entity, params) => {
 	
 	axios({
 		method: 'POST',
-		url: '/insert',
+		url: '/action',
 		data: {
 			entity: entity,
 			data: params,
@@ -133,44 +133,12 @@ var insertData = (entity, params) => {
 	
 };
 
-var ProdSend = (pri, hei, mod) => {
-	axios({
-		method: 'POST',
-		url: '/addP',
-		data: {
-			price: pri,
-			height: hei,
-			model: mod, 
-		}
-	}).then(function (json) {
-		if (json.data.res === false) {	
-			$(document).find('#dialog').append('<p>Produto já existe na base de dados</p>');
-			$(document).find('#dialog').dialog('open');
-			return false;	
-		}
-		
-		var add = '<tr>';
-		add += '<td><center>'+ json.data.id +'</center></td>';
-		add += '<td><center>'+ json.data.desc +'</center></td>';
-		add += '<td><center>'+ json.data.height +'</center></td>';
-		add += '<td><center>'+ json.data.price +'</center></td>';
-		add += '<td><center><span class="badge badge-pill badge-info edit" style="cursor: pointer">Editr</span> <div class="badge badge-pill badge-danger rmv" style="cursor: pointer">Remove</div></center></td>';
-		add += '</tr>';
-		var el = $(document).find('.prod');
-		el.append(add);
-		
-		$(document).find('#dialog-confirm').dialog( "close" );
-	})
-};
-
 var remove = (entity, id) => {
-	axios({
-		method: 'POST',
-		url: '/remove',
+	axios.delete('/action', {
 		data: {
 			id: id,
 			entity: entity,
-		}
+		},
 	}).then(function (json) {		
 		/**
 		if (json.data.failmsg) {

@@ -2,25 +2,25 @@
 
 {% block title %} Sistema - Inicio {% endblock %}
 
-    {% block menu %} 
+{% block menu %} 
 
-        {% set menu = ['Inicio', 'Registros', 'Produção','Relatórios', 'Usuarios', 'Galeria','Contato'] %}    
-            {% include 'templates/menu.twig' with menu %}
+{% include 'templates/menus/indexMenu.twig' %}
 
-        {% endblock %} {% block content %}
-        <header>
-            <h2 class="tm-blue-text tm-welcome-title tm-margin-b-45">Bem Vindo ao meu sistema!</h2>
-        </header>
-        
-        <p>Esse sistema é uma grande aplicação de aprendizado e aplicação de conceitos para automatizar meu atual trabalho como
-            assistente adminsitrativo de uma empresa, abaixo os itens que desenvolverei em forma de checklist:</p>
-            <p><input type="checkbox" checked disabled> Cadastro de produtos</p>
-            <p><input type="checkbox" checked disabled> Redundancia de registros</p>
-            <p><input type="checkbox" checked disabled> Cadastro de produção diaria</p>
-            <p><input type="checkbox" checked disabled> Criação de Usuarios</p>
-            <p><input type="checkbox" checked disabled> Parte de autenticação</p>
-            <p><input type="checkbox" disabled> Relatorio de produção por datas especificas</p>
-            <p><input type="checkbox" disabled> Galeria</p>
-            <p><input type="checkbox" disabled> Contatos por e-mail</p>
-            <p><input type="checkbox" disabled> Transformar tudo em uma SPA</p>
-        {% endblock %}
+{% endblock %} 
+{% block content %}
+<header>
+    <h2 class="tm-blue-text tm-welcome-title tm-margin-b-45">Bem Vindo ao meu sistema!</h2>
+</header>
+
+<p>Esse sistema é uma grande aplicação de aprendizado e aplicação de conceitos para automatizar meu atual trabalho como
+    assistente adminsitrativo de uma empresa, abaixo os itens que desenvolverei em forma de checklist:</p>
+    <p><input type="checkbox" checked disabled> Cadastro de produtos</p>
+    <p><input type="checkbox" checked disabled> Redundancia de registros</p>
+    <p><input type="checkbox" checked disabled> Cadastro de produção diaria</p>
+    <p><input type="checkbox" checked disabled> Criação de Usuarios</p>
+    <p><input type="checkbox" checked disabled> Parte de autenticação</p>
+    <p><input type="checkbox" disabled> Relatorio de produção por datas especificas</p>
+    <p><input type="checkbox" disabled> Galeria</p>
+    <p><input type="checkbox" disabled> Contatos por e-mail</p>
+    <p><input type="checkbox" disabled> Transformar tudo em uma SPA</p>
+    {% endblock %}
