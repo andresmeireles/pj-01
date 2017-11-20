@@ -1,23 +1,11 @@
 <ul class="tm-main-nav-ul">
     <li class="tm-nav-item"><a href="/" class="tm-nav-item-link">Inicio</a></li>
-  {% if prefix != null %}
-
+  
       {% for m in menu %}
 
         <li class="tm-nav-item">      
-            <a href="/{{ prefix }}/{{ m | slug }}" class="tm-nav-item-link">{{ m }}</a>
+            <a href="/{{ (prefix) }}{{ m | slug }}" class="tm-nav-item-link">{{ m }}</a>
         </li>
 
       {% endfor %}
-
-    {% else %}
-
-      {% for m in menu %}
-
-        <li class="tm-nav-item">
-              <a href="{{ prefix }}/{{ m | slug }}" class="tm-nav-item-link">{{ m }}</a>
-        </li>
-      {% endfor %}
-
-    {% endif %}
   </ul>

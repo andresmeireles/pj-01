@@ -4,11 +4,7 @@
 
 {% block menu %} 
 
-{% set prefix = 'producao' %}
-
-{% set menu = ['Inicio', 'Adicionar', 'Relatorios', 'Voltar'] %}
-
-{% include 'templates/menu.twig' with menu %}
+{% include "templates/menus/productionMenu.twig" %}
 
 {% endblock %} {% block content %}
 

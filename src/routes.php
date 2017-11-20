@@ -40,7 +40,7 @@ $app->group('', function () use ($app) {
     $app->get('/registros/clientes', 'RecordController:getCustomers');
     
     //relatorios
-    $app->get('/relatorios[/]', 'ReportController');
+    $app->get('/relatorios[/]', 'ReportController')->setName('report');
     $app->get('/relatorios/viagem', 'ReportController:createTravelReport')->setName('travel');
     $app->get('/relatorios/etiqueta', 'ReportController:createTagReport')->setName('tag');
     $app->get('/relatorios/romaneio', 'ReportController:createBoardingDeliveryReport')->setName('boardingDelivery');
@@ -50,11 +50,14 @@ $app->group('', function () use ($app) {
     $app->get('/producao[/]', 'ProductionController:index');
     $app->get('/producao/adicionar', 'ProductionController:addProduction');
     
+    //redirect to reports
+    $app->get('/producao/relatorios', function ($request, $response) {
+        return $response->withRedirect('/relatorios');
+    });
+
     $app->post('/getProductJson', 'ProductionController:getProductJson');
     $app->post('/sendProduction', 'ProductionController:saveProduction');
     
-    // report pages
-    $app->get('/producao/relatorios', 'ReportController:index')->setName('report.report');
-    $app->get('/producao/createRepo', 'ReportController:createReport');
+    
 });//->add('AuthMiddleware');
 

@@ -55,6 +55,8 @@ class BoardingReport implements ReportInterface
 	{
         unset($data['report']);
 
+        $data = array_reverse($data);
+
 		$body = '<table class="table">'.
 		'<caption id="titulo" style="font-size: 40px">ROMANEIO DE ENTREGA</caption>'.
 		'<thead style="border-bottom: 4px solid black">'.
