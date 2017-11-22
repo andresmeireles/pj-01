@@ -33,6 +33,9 @@ $(function () {
         
     function removeRow(e) {
         e.preventDefault();
+        if (document.querySelectorAll('.create-area').length == 1) {
+            return false;
+        }
         var row = $(this).closest('.create-area');
         row.remove();
     }

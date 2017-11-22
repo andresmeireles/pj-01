@@ -19,6 +19,13 @@ class Deliveryreport implements ReportInterface
 	public function create(array $data) 
 	{
         unset($data['report']);
+
+        $data = array_map(function ($datas) {
+            foreach ($datas as $data) {
+                $sanitizedResult = ltrim(rtrim($data));
+            }
+            return $sanitizedResult;
+        }, $data);
         
         foreach ($data as $customer) {
             $fatalError = false;
