@@ -45,8 +45,8 @@ class Deliveryreport implements ReportInterface
         $html = $this->createBody($data);
         $mpdf->AddPage('L', // L - landscape, P - portrait 
         '', '', '', 'on',
-        2, // margin_left
-        2, // margin right
+        10, // margin_left
+        10, // margin right
         5, // margin top
         0, // margin bottom
         0, // margin header

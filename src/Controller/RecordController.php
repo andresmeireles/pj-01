@@ -48,10 +48,12 @@ class RecordController
     {
         $entity = str_rot13('customer');
         $customers = $this->db->getRepository('\App\Entity\Customer')->findAll();
-
+        $states = $this->db->getRepository('\App\Entity\Estados')->findBy(array(), ['Nome' => 'ASC']);
+        
         return $this->view->render($response, '/register/customers.twig', array(
             'entity' => $entity,
             'customers' => $customer,
+            'states' => $states,
         ));
     }
     
@@ -115,6 +117,37 @@ class RecordController
     {   
         $mapper = $this->getMapperName($request->getParam('entity')); 
         return $response->withJson($mapper->getRegister(['height' => 'ASC']));
+    }
+
+    public function getSingleRegisterByQuery($request, $response)
+    {
+        $args = $request->getParam('args');
+        foreach ($args as $key => $value) {
+            $query[$key] = $value;
+        }
+        $mapper = $this->getMapperName($request->getParam('entity'));
+        return $response->withJson($mapper->getRegister($query));
+    }
+
+    /**
+     * getregisterByInfo
+     *
+     * Recebe dentro de request 2 parametros, via ajax, 
+     * entity => nome da entidade que será manipulada
+     * attr => atributo json com apenas uma linha com segindo o padrão
+     * { 'nome': valor }
+     * 
+     * @param [requestInterface] $request
+     * @param [responseInterface] $response
+     * @return json
+     */
+    public function getRegisterByInfo($request, $response)
+    {
+        $data = $request->getParam('attr');
+
+        die();
+        $mapper = $this->getMapperName($request->getParam('entity'));
+        return $response->withJson($mapper->$request->getParam('zipcode'));
     }
 
     private function getMapperName($entity)

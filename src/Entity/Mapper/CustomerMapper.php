@@ -56,6 +56,21 @@ class CustomerMapper implements MapperInterface
         return true;
     }
     
+    public function getRegister(array $query)
+    {
+        $em = $this->em;
+
+        $repository = $em->getRepository('\App\Entity\Municipios');
+        $privateResult = $repository->findBy($query);
+
+        $publicResult = array_map(function ($a) {
+            $result[$a->getId()] = $a->getNome();
+            return $result;
+        }, $privateResult);
+
+        return $publicResult;
+    }
+
     public function updateData($id, $params){}
     
     public function removeData($id){}

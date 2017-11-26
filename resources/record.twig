@@ -2,9 +2,11 @@
 
 {% block title %} Sistema {% endblock %}
 
-{% set prefix = 'registros' %}
-{% block menu %} {% set menu = [ 'Produto', 'Tamanho', 'Descrição', 'Clientes','Voltar'] %}
-{% include 'templates/menu.twig' with menu %} {% endblock %}
+{% block menu %} 
+
+{% include "templates/menus/registerMenu.twig" %}
+
+{% endblock %}
 
 {% block content %}
 <table class="table">

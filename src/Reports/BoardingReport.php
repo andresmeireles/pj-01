@@ -47,8 +47,8 @@ class BoardingReport implements ReportInterface
         $html = $this->createBody($data);
         $mpdf->AddPage('L', // L - landscape, P - portrait 
         '', '', '', 'on',
-        2, // margin_left
-        2, // margin right
+        10, // margin_left
+        10, // margin right
         5, // margin top
         0, // margin bottom
         0, // margin header
@@ -63,8 +63,6 @@ class BoardingReport implements ReportInterface
 	public function createBody(array $data)
 	{
         unset($data['report']);
-
-        $data = array_reverse($data);
 
 		$body = '<table class="table">'.
 		'<caption id="titulo" style="font-size: 40px">ROMANEIO DE ENTREGA</caption>'.

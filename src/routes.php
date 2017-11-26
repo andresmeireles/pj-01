@@ -38,6 +38,7 @@ $app->group('', function () use ($app) {
     $app->get('/getSingleRegistry/{entity}/{id}', 'RecordController:getSingleRegistry');
     
     $app->get('/registros/clientes', 'RecordController:getCustomers');
+    $app->put('/registros/clientes', 'RecordController:getSingleRegisterByQuery');
     
     //relatorios
     $app->get('/relatorios[/]', 'ReportController')->setName('report');

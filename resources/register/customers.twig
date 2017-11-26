@@ -4,11 +4,7 @@
 
 {% block menu %} 
 
-{% set prefix = 'registros' %}
-
-{% set menu = ['Inicio', 'Produto', 'Tamanho', 'Descrição', 'Clientes', 'Voltar'] %}
-
-{% include 'templates/menu.twig' with menu %}
+{% include "templates/menus/registerMenu.twig" %}
 
 {% endblock %} {% block content %}
 
@@ -68,20 +64,23 @@
       <div id="tabs-2">
         
         <div class="form-row">
-          <div class="form-group col-md-6">
+          
+          <div class="form-group col">
+            <input type="text" class="form-control" id="zipcode" name="customerAddressZipcode" placeholder="CEP">
+          </div>
+          <div class="form-group">
+            <div class="fa fa-map-marker fa-fw fa-2x" id="completeWithCep" aria-hidden="true" title="Buscar endereço via cep" style="border: 0.5px solid pink"></div>
+          </div>
+          <div class="form-group col-5">
             <input type="text" class="form-control" id="road" name="customerAddressRoad" placeholder="Rua x">
           </div>
-          <div class="form-group col-md-2">
+          <div class="form-group">
             <input type="text" class="form-control" id="number" name="customerAddressHouseNumber" placeholder="Nº">
-          </div>
-          <div class="form-group col-md-4">
-            <input type="text" class="form-control" id="neighborhood" name="customerAddressNeighborhood" placeholder="Bairro">
           </div>
         </div>
         <div class="form-row">
-          
           <div class="form-group col-md-4">
-            <input type="text" class="form-control" id="zipcode" name="customerAddressZipcode" placeholder="CEP">
+            <input type="text" class="form-control" id="neighborhood" name="customerAddressNeighborhood" placeholder="Bairro">
           </div>
           <div class="form-group col-md-8">
             <input type="number" class="form-control" id="complement" name="customerAddressComplement" placeholder="Complemento">
@@ -92,6 +91,9 @@
           <div class="form-group col-md-6">
             <select id="state" name="customerState" class="form-control" style="height: 2.05em">
               <option selected disabled>Estado</option>
+              {% for state in states %}
+                <option value="{{ state.id }}" uf="{{ state.uf }}">{{ state.Nome }}</option>
+              {% endfor %}
             </select>
           </div>
           
@@ -136,23 +138,23 @@
         </div>
         
         <div class="form-row">
-            
-            <div class="form-group col-sm-1">
-              <input type="number" id="dddo" name="dddcustomerNumber" class="form-control" placeholder="DDD" required>
-            </div>
-            
-            <div class="form-group col-md-5">
-              <input type="number" id="onumber" name="customerNumber" class="form-control" placeholder="Numero (opcional)" required>
-            </div>
-            
-            <div class="form-group col-sm-1">
-              <input type="number" name="customerNumber2" id="dddo2" class="form-control" placeholder="DDD" required>
-            </div>
-            
-            <div class="form-group col-md-5">
-              <input type="number" id="onumber2" name="customerNumber2" class="form-control" placeholder="Numero 2 (opicional)" required>
-            </div>
+          
+          <div class="form-group col-sm-1">
+            <input type="number" id="dddo" name="dddcustomerNumber" class="form-control" placeholder="DDD" required>
           </div>
+          
+          <div class="form-group col-md-5">
+            <input type="number" id="onumber" name="customerNumber" class="form-control" placeholder="Numero (opcional)" required>
+          </div>
+          
+          <div class="form-group col-sm-1">
+            <input type="number" name="customerNumber2" id="dddo2" class="form-control" placeholder="DDD" required>
+          </div>
+          
+          <div class="form-group col-md-5">
+            <input type="number" id="onumber2" name="customerNumber2" class="form-control" placeholder="Numero 2 (opicional)" required>
+          </div>
+        </div>
         
       </div>
       

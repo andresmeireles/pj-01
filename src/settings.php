@@ -35,7 +35,8 @@ return array(
                 'driver'    => getenv(DATA_BASE_DRIVE),
                 'dbname'    => getenv(DATA_BASE_NAME),
                 'user'      => getenv(DATA_BASE_USER),
-                'password'  => getenv(DATA_BASE_PASS)
+                'password'  => getenv(DATA_BASE_PASS),
+                'charset' => 'UTF8',
             )
         ),
         

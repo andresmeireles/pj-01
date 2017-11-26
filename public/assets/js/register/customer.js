@@ -123,4 +123,63 @@ $(function () {
 		$('body').data('id', id);
 		$('#dialog-form').dialog('open');
 	});
+
+	var completeMap = () => {
+		var zipcode = this.querySelector('#zipcode').value;
+		var entity = this.querySelector('#entity').getAttribute('entity');
+		getAddressByCep(zipcode);
+	};
+
+	var getAddressByCep = (zipcode) => {
+		axios.get('https://viacep.com.br/ws/'+ zipcode +'/json/').
+		then( (json) => {
+			var opt = document.querySelector('#state').querySelectorAll('option');
+			var address = json.data;
+			document.querySelector('#road').value = address.logradouro;
+			document.querySelector('#neighborhood').value = address.bairro;
+			for (var c = 0; c < opt.length; c++) {
+				if (opt[c].getAttribute('uf') == address.uf) {
+					opt[c].setAttribute('selected', '');
+					break;
+				}
+			}
+			document.querySelector('#city').value = address.localidade;
+			//document.querySelector('#state').value = address.uf;
+		});
+	}
+
+	document.querySelector('#state').addEventListener('change', getState);
+
+	function getState() {
+		var state = this.options[this.options.selectedIndex].getAttribute('uf');
+		var entity = document.querySelector('#entity').getAttribute('entity');
+		console.log(entity);
+		var info = {
+			'Uf' : state,
+		}
+		axios.put('/registros/clientes', {
+			entity: entity,
+			args: info,
+		}).then(function (json) {
+			var states = json.data;
+			var cod = document.querySelector('#city');
+			
+			for (var i = 0; i < cod.length; i++) {
+				if (cod[i].disabled == false) {
+					console.log(cod[i])
+					cod[i].remove();
+				}
+			}
+			
+			for (var c = 0; c < states.length; c++) {	
+				var el = document.querySelector('#city');
+				var opt = document.createElement('option');
+				opt.value = Object.keys(states[c])[0];
+				opt.text = Object.values(states[c])[0];
+				el.add(opt, null);
+			}
+		});
+	}
+
+	document.querySelector('#completeWithCep').addEventListener('click', completeMap);
 });
