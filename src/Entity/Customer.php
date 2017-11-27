@@ -20,7 +20,7 @@ class Customer
     /** @Column(type="string") */
     private $customerLastName;
     
-    /** @Column(type="integer", length=11) */
+    /** @Column(type="integer", length=11, unique=true) */
     private $customerCPF;
 
     /** @Column(type="string") */
@@ -35,19 +35,19 @@ class Customer
     /** @Column(type="string") */
     private $customerAddressHouseNumber;
 
-    /** @Column(type="string") */
+    /** @Column(type="string", nullable=true) */
     private $customerAddressComplement;
 
-    /** @Column(type="string") */
+    /** @Column(type="integer", nullable=true) */
     private $customerCity;
 
-    /** @Column(type="string") */
+    /** @Column(type="integer") */
     private $customerState;
 
     /** @Column(type="string") */
     private $customerEmail;
 
-    /** @Column(type="string") */
+    /** @Column(type="string", nullable=true) */
     private $customerEmail2;
 
     /** @Column(type="integer", length=10) */
@@ -56,10 +56,10 @@ class Customer
     /** @Column(type="integer", length=11) */
     private $customerCellphoneNumber;
 
-    /** @Column(type="integer", length=11) */
+    /** @Column(type="integer", length=11, nullable=true) */
     private $customerNumber;
 
-    /** @Column(type="integer", length=11) */
+    /** @Column(type="integer", length=11, nullable=true) */
     private $customerNumber2;
     
     function getId() {

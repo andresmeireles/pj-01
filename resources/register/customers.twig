@@ -12,12 +12,13 @@
 
 <h3>Clientes</h3><hr>
 
-<button style="cursor: pointer" class="btn btn-primary btn-lg btn-block" id="show-modal" class="insert">Adicionar Cleinte</button>
+<button style="cursor: pointer" class="btn btn-primary btn-lg btn-block" id="show-modal" class="insert">Adicionar Cliente</button>
 <hr>
 <table>
   <thead class="table">
     <tr>
       <th><center>ID</center></th>
+      <th><center>Reponsavel</center></th>
       <th><center>Razão Social</center></th>
       <th><center>Nome Fantasia</center></th>
       <th><center>C.N.P.J</center></th>
@@ -28,9 +29,10 @@
   <tbody>
     <tr>
       <td width="05%"><center>1</center></td>  
+      <td width="18%"><center>Alguem muito Responsavel</center></td>
       <td width="18%"><center>Tonho</center></td>
       <td><center>Tonholândia</center></td>
-      <td width="22%"><center>12.456.789/0987-65</center></td>
+      <td width="20%"><center>12.456.789/0987-65</center></td>
       <td><center>Algum estado/ET</center></td>
       <td><center><div class="badge badge-pill badge-secondary rmv">Info</div></center></td>
     </tr>
@@ -110,11 +112,11 @@
         
         <div class="form-row">
           <div class="form-group col-md-6">
-            <input type="email" id="email" name="customerEmail" class="form-control" placeholder="Email" required>
+            <input type="email" id="email2" name="customerEmail2" class="form-control" placeholder="Email">
           </div>
           
           <div class="form-group col-md-6">
-            <input type="email" name="customerEmail2" id="email2" class="form-control" placeholder="Email 2" required>
+            <input type="email" name="customerEmail" id="email" class="form-control" placeholder="Email (opcional)">
           </div>
         </div>
         
@@ -125,7 +127,7 @@
           </div>
           
           <div class="form-group col-md-5">
-            <input type="number" id="enumber" name="customerEnterprizeNumber" class="form-control" placeholder="Numero" required>
+            <input type="number" id="enumber" name="customerEnterpriseNumber" class="form-control" placeholder="Numero" required>
           </div>
           
           <div class="form-group col-sm-1">
@@ -133,7 +135,7 @@
           </div>
           
           <div class="form-group col-md-5">
-            <input type="number" id="cellphone" name="customerCellphone" class="form-control" placeholder="Cellphone number" required>
+            <input type="number" id="cellphone" name="customerCellphoneNumber" class="form-control" placeholder="Cellphone number" required>
           </div>
         </div>
         

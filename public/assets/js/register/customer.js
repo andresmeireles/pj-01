@@ -1,6 +1,6 @@
 $(function () {
 	$('#tabs').tabs();
-
+	
 	$(document).find('#dialog-confirm').dialog({
 		autoOpen:false,
 		resizable: false,
@@ -46,7 +46,7 @@ $(function () {
 				var dddo2 = $('#dddo2').val();
 				var onumber2 = $('#onumber2').val();
 				var finalOnumber2 = dddo + onumber;
-
+				
 				var params = {
 					[$('#name').attr('name')]: firstName,
 					[$('#lastname').attr('name')]: lastName,
@@ -65,9 +65,6 @@ $(function () {
 					[$('#onumber').attr('name')]: finalOnumber,
 					[$('#onumber2').attr('name')]: finalOnumber2,
 				};
-
-				console.log(params);
-
 				insertData(entity, params);
 			},
 			Cancel: function() {
@@ -123,37 +120,52 @@ $(function () {
 		$('body').data('id', id);
 		$('#dialog-form').dialog('open');
 	});
-
+	
 	var completeMap = () => {
 		var zipcode = this.querySelector('#zipcode').value;
 		var entity = this.querySelector('#entity').getAttribute('entity');
 		getAddressByCep(zipcode);
 	};
-
+	
 	var getAddressByCep = (zipcode) => {
 		axios.get('https://viacep.com.br/ws/'+ zipcode +'/json/').
 		then( (json) => {
-			var opt = document.querySelector('#state').querySelectorAll('option');
+			var opt = this.querySelectorAll('#state option');
 			var address = json.data;
-			document.querySelector('#road').value = address.logradouro;
-			document.querySelector('#neighborhood').value = address.bairro;
+			this.querySelector('#road').value = address.logradouro;
+			this.querySelector('#neighborhood').value = address.bairro;
 			for (var c = 0; c < opt.length; c++) {
 				if (opt[c].getAttribute('uf') == address.uf) {
+					opt[c].setAttribute('selected', '');
+					document.querySelector('#state').dispatchEvent(new Event('change'));
+					break;
+				}
+			}
+			setTimeout(() => {
+				matchCity(zipcode);
+			}, 90); 
+		});
+	}
+	
+	var matchCity = (zipcode) => {
+		axios.get('https://viacep.com.br/ws/'+ zipcode +'/json/').
+		then( (json) => {
+			var opt = document.querySelectorAll('#city option');
+			var address = json.data;
+			for (var c = 0; opt.length; c++) {
+				if (opt[c].innerHTML == address.localidade) {
 					opt[c].setAttribute('selected', '');
 					break;
 				}
 			}
-			document.querySelector('#city').value = address.localidade;
-			//document.querySelector('#state').value = address.uf;
 		});
 	}
-
-	document.querySelector('#state').addEventListener('change', getState);
-
-	function getState() {
+	
+	document.querySelector('#state').addEventListener('change', getCity);
+	
+	function getCity() {
 		var state = this.options[this.options.selectedIndex].getAttribute('uf');
 		var entity = document.querySelector('#entity').getAttribute('entity');
-		console.log(entity);
 		var info = {
 			'Uf' : state,
 		}
@@ -162,11 +174,10 @@ $(function () {
 			args: info,
 		}).then(function (json) {
 			var states = json.data;
-			var cod = document.querySelector('#city');
+			var cod = document.querySelectorAll('#city option');
 			
 			for (var i = 0; i < cod.length; i++) {
-				if (cod[i].disabled == false) {
-					console.log(cod[i])
+				if (cod[i].disabled == false) {	
 					cod[i].remove();
 				}
 			}
@@ -180,6 +191,6 @@ $(function () {
 			}
 		});
 	}
-
+	
 	document.querySelector('#completeWithCep').addEventListener('click', completeMap);
 });

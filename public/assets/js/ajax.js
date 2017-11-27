@@ -113,6 +113,7 @@ var insertData = (entity, params) => {
 		},
 	})
 	.then((json) => {
+		console.log(json);
 		if (json.data) {
 			if (json.data.error) {
 				$(document).find('#dialog p').remove();
