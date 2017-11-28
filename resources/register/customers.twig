@@ -28,13 +28,15 @@
   </thead>
   <tbody>
     <tr>
-      <td width="05%"><center>1</center></td>  
-      <td width="18%"><center>Alguem muito Responsavel</center></td>
-      <td width="18%"><center>Tonho</center></td>
-      <td><center>Tonholândia</center></td>
-      <td width="20%"><center>12.456.789/0987-65</center></td>
-      <td><center>Algum estado/ET</center></td>
-      <td><center><div class="badge badge-pill badge-secondary rmv">Info</div></center></td>
+      {% for customer in customers %}
+      <td width="05%"><center>{{ customer.id }}</center></td>  
+      <td width="18%"><center>{{ customer.customerFirstName }}</center></td>
+      <td width="18%"><center>Nope</center></td>
+      <td><center>Nope</center></td>
+      <td width="20%"><center>nope</center></td>
+      <td><center>{{ customer.customerCity.Nome }} /{{ customer.customerState.Nome }}</center></td>
+      <td><center><div class="badge badge-pill badge-secondary rmv" style="cursor: pointer">Info</div></center></td>  
+      {% endfor %}
     </tr>
   </tbody>
 </table>
@@ -94,7 +96,7 @@
             <select id="state" name="customerState" class="form-control" style="height: 2.05em">
               <option selected disabled>Estado</option>
               {% for state in states %}
-                <option value="{{ state.id }}" uf="{{ state.uf }}">{{ state.Nome }}</option>
+              <option value="{{ state.Id }}" uf="{{ state.Uf }}">{{ state.Nome }}</option>
               {% endfor %}
             </select>
           </div>

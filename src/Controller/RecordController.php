@@ -52,7 +52,7 @@ class RecordController
         
         return $this->view->render($response, '/register/customers.twig', array(
             'entity' => $entity,
-            'customers' => $customer,
+            'customers' => $customers,
             'states' => $states,
         ));
     }
@@ -127,27 +127,6 @@ class RecordController
         }
         $mapper = $this->getMapperName($request->getParam('entity'));
         return $response->withJson($mapper->getRegister($query));
-    }
-
-    /**
-     * getregisterByInfo
-     *
-     * Recebe dentro de request 2 parametros, via ajax, 
-     * entity => nome da entidade que será manipulada
-     * attr => atributo json com apenas uma linha com segindo o padrão
-     * { 'nome': valor }
-     * 
-     * @param [requestInterface] $request
-     * @param [responseInterface] $response
-     * @return json
-     */
-    public function getRegisterByInfo($request, $response)
-    {
-        $data = $request->getParam('attr');
-
-        die();
-        $mapper = $this->getMapperName($request->getParam('entity'));
-        return $response->withJson($mapper->$request->getParam('zipcode'));
     }
 
     private function getMapperName($entity)

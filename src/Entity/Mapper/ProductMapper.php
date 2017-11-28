@@ -38,9 +38,9 @@ class ProductMapper implements MapperInterface
         $height = $this->em->getRepository(Height::class)->find($height);
         $desc = $this->em->getRepository(Description::class)->find($model);
         
-        $entity->setDescription($desc);
-        $entity->setHeight($height);
-        $entity->setPrice($price);
+        $entity->description = $desc;
+        $entity->height = $height;
+        $entity->price = $price;
         
         $this->em->persist($entity);
         $this->em->flush();

@@ -34,7 +34,7 @@ class DescriptionMapper implements MapperInterface
             return false;
         }
         
-        $entity->setDescription($description);
+        $entity->description = $description;
         
         $this->em->persist($entity);
         $this->em->flush();

@@ -1,5 +1,4 @@
 /.phpintel
 /vendor
-composer.lock
 .env
 slim.sql

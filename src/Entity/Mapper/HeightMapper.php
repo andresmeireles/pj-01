@@ -34,7 +34,7 @@ class HeightMapper implements MapperInterface
             return $this->validation->failed(); 
         }
         
-        $entity->setHeight($height);
+        $entity->height = $height;
         $this->em->persist($entity);
         $this->em->flush();
         

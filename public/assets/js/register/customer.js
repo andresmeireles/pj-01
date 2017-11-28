@@ -27,7 +27,7 @@ $(function () {
 				var cpf = $('#cpf').val();
 				var addrRoad = $('#road').val();
 				var addrNumber = $('#number').val();
-				var addrNeighborhood = $('#number').val();
+				var addrNeighborhood = $('#neighborhood').val();
 				var addrZipcode = $('#zipcode').val();
 				var addrComplement = $('#complement').val();
 				var addrState = $('#state').val();
@@ -173,7 +173,7 @@ $(function () {
 			entity: entity,
 			args: info,
 		}).then(function (json) {
-			var states = json.data;
+			var cities = json.data;
 			var cod = document.querySelectorAll('#city option');
 			
 			for (var i = 0; i < cod.length; i++) {
@@ -182,11 +182,11 @@ $(function () {
 				}
 			}
 			
-			for (var c = 0; c < states.length; c++) {	
+			for (var c = 0; c < cities.length; c++) {	
 				var el = document.querySelector('#city');
 				var opt = document.createElement('option');
-				opt.value = Object.keys(states[c])[0];
-				opt.text = Object.values(states[c])[0];
+				opt.value = cities[c].Id;
+				opt.text = cities[c].Nome;
 				el.add(opt, null);
 			}
 		});
