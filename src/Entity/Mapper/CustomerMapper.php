@@ -4,7 +4,7 @@ namespace App\Entity\Mapper;
 use \Doctrine\ORM\EntityManager;
 use Respect\Validation\Validator as v;
 use \App\Validation\ValidatorJson;
-use \App\Entity\Customer;
+use \App\Entity\EnterpriseCustomer;
 
 class CustomerMapper implements MapperInterface
 {
@@ -25,7 +25,7 @@ class CustomerMapper implements MapperInterface
             return $this->validator->failed();
         }        
         
-        $entity = new Customer;
+        $entity = new EnterpriseCustomer;
         extract($params);
         
         if (!$this->registerExists($cpf)) {
@@ -33,7 +33,7 @@ class CustomerMapper implements MapperInterface
         }
         
         try {
-            
+
             $entity->customerFirstName = $customerFirstName;
             $entity->customerLastName =$customerLastName;
             $entity->customerCPF = $customerCPF;
@@ -50,18 +50,22 @@ class CustomerMapper implements MapperInterface
             $entity->customerCellphoneNumber = $customerCellphoneNumber;
             $entity->customerNumber = ($customerNumber == '' ? null : $customerNumber);
             $entity->customerNumber2 = ($customerNumber2 == '' ? null : $customerNumber2);
-            
+            $entity->customerSocialName = $customerSocialName;
+            $entity->customerFantasyName = $customerFantasyName;
+            $entity->customerCnpj = $customerCnpj;
+            $entity->customerStateSubscription = $customerStateSubscription;
+            $entity->customerMunicipalSubscription = $customerMunicipalSubscription;
+
             $em->persist($entity);
             $em->flush();
             
+            return true;    
         } catch (\Doctrine\DBAL\Exception\UniqueConstraintViolationException $e) {
             $error['msg'] = $e->getMessage();
             $error['error'] = 'Cpf ja esta cadastrado';
             return $error;
         }
         
-        
-        return true;
     }
     
     public function getRegister(array $query)
@@ -75,47 +79,53 @@ class CustomerMapper implements MapperInterface
     }
     
     public function updateData($id, $params){}
-        
-        public function removeData($id){}
-            
-            public function registerExists($param)
-            {
-                if ($this->em->getRepository(Customer::class)->findBy(array('customerCPF' => $param))) {
-                    return false;
-                }
-                
-                return true;
-            }
-            
-            public function getEntityItem(){}
-                
-                public function getEntityItems(){}
-                    
-                    public function sanitizeParams($params)
-                    {
-                        $validator = $this->validator->validate($params, [
-                            'customerFirstName' => v::stringType()->notEmpty()->noWhitespace()->not(v::numeric()),
-                            'customerLastName' => v::stringType()->notEmpty()->not(v::numeric()),
-                            'customerCPF' => v::notEmpty()->cpf(),
-                            'customerAddressRoad' => v::notEmpty(),
-                            'customerAddressHouseNumber' => v::notEmpty(),
-                            'customerAddressNeighborhood' => v::optional(v::notEmpty()),
-                            'customerAddressZipcode' => v::notEmpty(),
-                            'customerAddressComplement' => v::optional(v::notEmpty()),
-                            'customerState' => v::optional(v::numeric()->notEmpty()->noWhitespace()),
-                            'customerCity' => v::optional(v::numeric()->notEmpty()->noWhitespace()),
-                            'customerEmail' => v::notEmpty()->email(),
-                            'customerEmail2' => v::optional(v::email()),
-                            'customerEnterpriseNumber' => v::notEmpty()->noWhitespace()/** ->createCustomValidation() for fone */,
-                            'customerCellphoneNumber' => v::notEmpty()->noWhitespace()/** ->createCustomValidation() for fone */,
-                            'customerNumber' => v::optional(v::notEmpty()->noWhitespace()),
-                            'customerNumber2' => v::optional(v::notEmpty()->noWhitespace()),
-                            ]);
-                            
-                            if ($validator->failed()) {
-                                return false;
-                            }
-                            
-                            return true;
-                        }
-                    }
+
+    public function removeData($id){}
+
+    public function registerExists($param)
+    {
+        if ($this->em->getRepository(EnterpriseCustomer::class)->findBy(array('customerCPF' => $param))) {
+            return false;
+        }
+
+        return true;
+    }
+
+    public function getEntityItem(){}
+
+    public function getEntityItems(){}
+
+    public function sanitizeParams($params)
+    {
+        $validator = $this->validator->validate($params, [
+            'customerFirstName' => v::stringType()->notEmpty()->noWhitespace()->not(v::numeric()),
+            'customerLastName' => v::stringType()->notEmpty()->not(v::numeric()),
+            'customerCPF' => v::notEmpty()->cpf(),
+            'customerSocialName' => v::stringType()->notEmpty(),
+            'customerFantasyName' => v::optional(v::stringType()),
+            'customerCnpj' => v::numeric()->notEmpty()->noWhitespace(),
+            'customerStateSubscription' => v::numeric()->notEmpty()->noWhitespace(),
+            'customerMunicipalSubscription' => v::numeric()->notEmpty()->noWhitespace(),
+            'customerAddressRoad' => v::notEmpty(),
+            'customerAddressHouseNumber' => v::notEmpty(),
+            'customerAddressNeighborhood' => v::optional(v::notEmpty()),
+            'customerAddressZipcode' => v::notEmpty(),
+            'customerAddressComplement' => v::optional(v::notEmpty()),
+            'customerState' => v::optional(v::numeric()->notEmpty()->noWhitespace()),
+            'customerCity' => v::optional(v::numeric()->notEmpty()->noWhitespace()),
+            'customerEmail' => v::notEmpty()->email(),
+            'customerEmail2' => v::optional(v::email()),
+            'customerEnterpriseNumber' => v::notEmpty()->noWhitespace()/** ->createCustomValidation() for fone */,
+            'customerCellphoneNumber' => v::notEmpty()->noWhitespace()/** ->createCustomValidation() for fone */,
+            'customerNumber' => v::optional(v::notEmpty()->noWhitespace()),
+            'customerNumber2' => v::optional(v::notEmpty()->noWhitespace()),
+
+        ]);
+
+        if ($validator->failed()) {
+            return false;
+        }
+
+        return true;
+    }
+}

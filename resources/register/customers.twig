@@ -2,178 +2,201 @@
 
 {% block title %} Sistema - Inicio {% endblock %}
 
-{% block menu %} 
+  {% block menu %} 
 
-{% include "templates/menus/registerMenu.twig" %}
+    {% include "templates/menus/registerMenu.twig" %}
 
-{% endblock %} {% block content %}
+  {% endblock %} {% block content %}
 
-{# aqui começa a brincadeira #}
+  {# aqui começa a brincadeira #}
 
-<h3>Clientes</h3><hr>
+  <h3>Clientes</h3><hr>
 
-<button style="cursor: pointer" class="btn btn-primary btn-lg btn-block" id="show-modal" class="insert">Adicionar Cliente</button>
-<hr>
-<table>
-  <thead class="table">
-    <tr>
-      <th><center>ID</center></th>
-      <th><center>Reponsavel</center></th>
-      <th><center>Razão Social</center></th>
-      <th><center>Nome Fantasia</center></th>
-      <th><center>C.N.P.J</center></th>
-      <th><center>Cidade/Estado</center></th>
-      <th></th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
+  <button style="cursor: pointer" class="btn btn-primary btn-lg btn-block" id="show-modal" class="insert">Adicionar Cliente</button>
+  <hr>
+  <table>
+    <thead class="table">
+      <tr>
+        <th><center>ID</center></th>
+        <th><center>Reponsavel</center></th>
+        <th><center>Razão Social</center></th>
+        <th><center>Nome Fantasia</center></th>
+        <th><center>C.N.P.J</center></th>
+        <th><center>Cidade/Estado</center></th>
+        <th></th>
+      </tr>
+    </thead>
+    <tbody>
       {% for customer in customers %}
-      <td width="05%"><center>{{ customer.id }}</center></td>  
-      <td width="18%"><center>{{ customer.customerFirstName }}</center></td>
-      <td width="18%"><center>Nope</center></td>
-      <td><center>Nope</center></td>
-      <td width="20%"><center>nope</center></td>
-      <td><center>{{ customer.customerCity.Nome }} /{{ customer.customerState.Nome }}</center></td>
-      <td><center><div class="badge badge-pill badge-secondary rmv" style="cursor: pointer">Info</div></center></td>  
+        <tr>
+          <td width="05%" entityId="{{ customer.id }}"><center>{{ customer.id }}</center></td>  
+          <td width="18%"><center>{{ customer.customerFirstName }}</center></td>
+          <td width="18%"><center>{{ customer.customerSocialName }}</center></td>
+          <td><center>{{ customer.customerFantasyName   }}</center></td>
+          <td width="20%"><center>{{ customer.customerCnpj }}</center></td>
+          <td><center>{{ customer.customerCity.Nome }} /{{ customer.customerState.Nome }}</center></td>
+          <td><center>&ensp;<div class="badge badge-pill badge-secondary info" style="cursor: pointer">Info</div></center></td>  
+        </tr>
       {% endfor %}
-    </tr>
-  </tbody>
-</table>
+    </tbody>
+  </table>
 
-<div id="dialog-confirm" title="Adicionar novo Cliente">
-  <form>
-    <div id="tabs">
-      <ul>
-        <li><a href="#tabs-1">Dados Cadastrais</a></li>
-        <li><a href="#tabs-2">Endereço</a></li>
-        <li><a href="#tabs-3">Contato</a></li>
-      </ul>
-      <div id="tabs-1">
-        
-        <div class="form-row">
-          <div class="form-group col-md-4">
-            <input type="text" class="form-control" name="customerFirstName" id="name" placeholder="Responsavel" required>
-          </div>
-          <div class="form-group col-md-4">
-            <input type="text" class="form-control" name="customerLastName" id="lastname" placeholder="Ultimo Nome" required>
-          </div>
-          <div class="form-group col-md-4">
-            <input type="number" class="form-control" name="customerCPF" id="cpf" placeholder="CPF" required>
-          </div>
-        </div>
-        
-      </div>
-      
-      <div id="tabs-2">
-        
-        <div class="form-row">
-          
-          <div class="form-group col">
-            <input type="text" class="form-control" id="zipcode" name="customerAddressZipcode" placeholder="CEP">
-          </div>
-          <div class="form-group">
-            <div class="fa fa-map-marker fa-fw fa-2x" id="completeWithCep" aria-hidden="true" title="Buscar endereço via cep" style="border: 0.5px solid pink"></div>
-          </div>
-          <div class="form-group col-5">
-            <input type="text" class="form-control" id="road" name="customerAddressRoad" placeholder="Rua x">
-          </div>
-          <div class="form-group">
-            <input type="text" class="form-control" id="number" name="customerAddressHouseNumber" placeholder="Nº">
-          </div>
-        </div>
-        <div class="form-row">
-          <div class="form-group col-md-4">
-            <input type="text" class="form-control" id="neighborhood" name="customerAddressNeighborhood" placeholder="Bairro">
-          </div>
-          <div class="form-group col-md-8">
-            <input type="number" class="form-control" id="complement" name="customerAddressComplement" placeholder="Complemento">
-          </div>
-        </div>
-        
-        <div class="form-row">
-          <div class="form-group col-md-6">
-            <select id="state" name="customerState" class="form-control" style="height: 2.05em">
-              <option selected disabled>Estado</option>
-              {% for state in states %}
-              <option value="{{ state.Id }}" uf="{{ state.Uf }}">{{ state.Nome }}</option>
-              {% endfor %}
-            </select>
-          </div>
-          
-          <div class="form-group col-md-6">
-            <select id="city" name="customerCity" class="form-control" style="height: 2.05em">
-              <option selected disabled>Cidade</option>
-            </select>
-          </div>
-        </div>
-        
-      </div>
-      
-      <div id="tabs-3">
-        
-        <div class="form-row">
-          <div class="form-group col-md-6">
-            <input type="email" id="email2" name="customerEmail2" class="form-control" placeholder="Email">
-          </div>
-          
-          <div class="form-group col-md-6">
-            <input type="email" name="customerEmail" id="email" class="form-control" placeholder="Email (opcional)">
-          </div>
-        </div>
-        
-        <div class="form-row">
-          
-          <div class="form-group col-sm-1">
-            <input type="number" id="ddd" name="dddcustomerEnterprizeNumber" class="form-control" placeholder="DDD" required>
-          </div>
-          
-          <div class="form-group col-md-5">
-            <input type="number" id="enumber" name="customerEnterpriseNumber" class="form-control" placeholder="Numero" required>
-          </div>
-          
-          <div class="form-group col-sm-1">
-            <input type="number" name="dddCustomerCellphone" id="dddc" class="form-control" placeholder="DDD" required>
-          </div>
-          
-          <div class="form-group col-md-5">
-            <input type="number" id="cellphone" name="customerCellphoneNumber" class="form-control" placeholder="Cellphone number" required>
-          </div>
-        </div>
-        
-        <div class="form-row">
-          
-          <div class="form-group col-sm-1">
-            <input type="number" id="dddo" name="dddcustomerNumber" class="form-control" placeholder="DDD" required>
-          </div>
-          
-          <div class="form-group col-md-5">
-            <input type="number" id="onumber" name="customerNumber" class="form-control" placeholder="Numero (opcional)" required>
-          </div>
-          
-          <div class="form-group col-sm-1">
-            <input type="number" name="customerNumber2" id="dddo2" class="form-control" placeholder="DDD" required>
-          </div>
-          
-          <div class="form-group col-md-5">
-            <input type="number" id="onumber2" name="customerNumber2" class="form-control" placeholder="Numero 2 (opicional)" required>
-          </div>
-        </div>
-        
-      </div>
-      
-    </div>
-  </form>
-</div>
-<input type="hidden" id="entity" entity="{{ entity }}" value="ninja">
-<div id="dialog" title="Aviso">
-</div>  
+  <div id="dialog-confirm" title="Adicionar novo Cliente">
+    <form>
+      <div id="tabs">
+        <ul>
+          <li><a href="#tabs-1">Dados Cadastrais</a></li>
+          <li><a href="#tabs-2">Endereço</a></li>
+          <li><a href="#tabs-3">Contato</a></li>
+        </ul>
+        <div id="tabs-1">
+          <fieldset>
+            <legend>Pessoa fisca</legend>
+            <div class="form-row">
+              <div class="form-group col-md-4">
+                <input type="text" class="form-control" name="customerFirstName" id="name" placeholder="Responsavel" required>
+              </div>
+              <div class="form-group col-md-4">
+                <input type="text" class="form-control" name="customerLastName" id="lastname" placeholder="Ultimo Nome" required>
+              </div>
+              <div class="form-group col-md-4">
+                <input type="number" class="form-control" name="customerCPF" id="cpf" placeholder="CPF" required>
+              </div>
+            </div>
+          </fieldset>
 
-{# aqui termina a brincadeira #}
+          <fieldset>
+            <legend>Pessoa Juridica</legend>
+            <div class="form-row">
+              <div class="form-group col-md-6">
+                <input type="text" class="form-control" name="customerSocialName" id="socialName" placeholder="Razão Social" required>
+              </div>
+              <div class="form-group col-md-6">
+                <input type="text" class="form-control" name="customerFantasyName" id="fantasyName" placeholder="Nome fantasia" required>
+              </div>
+            </div>
 
-{% endblock %}
-{% block cjs %}
-<script src="/assets/js/sys/axios.min.js"></script>
-<script src="/assets/js/ajax.js"></script>
-<script src="/assets/js/register/customer.js"></script>
-{% endblock %}
+            <div class="form-row">
+              <div class="form-group col-md-4">
+                <input type="number" class="form-control" name="customerCnpj" id="cnpj" placeholder="CNPJ" required>
+              </div>
+              <div class="form-group col-md-4">
+                <input type="number" class="form-control" name="customerStateSubscription" id="stateSubscription" placeholder="Inscrição estadual" required>
+              </div>
+              <div class="form-group col-md-4">
+                <input type="number" class="form-control" name="customerMunicipalSubscription" id="municipalSubscription" placeholder="Inscrição Municipal (opicional)" required>
+              </fieldset>
+            </div>  
+
+            <div id="tabs-2">
+
+              <div class="form-row">
+
+                <div class="form-group col">
+                  <input type="text" class="form-control" id="zipcode" name="customerAddressZipcode" placeholder="CEP">
+                </div>
+                <div class="form-group">
+                  <div class="fa fa-map-marker fa-fw fa-2x" id="completeWithCep" aria-hidden="true" title="Buscar endereço via cep" style="border: 0.5px solid pink"></div>
+                </div>
+                <div class="form-group col-5">
+                  <input type="text" class="form-control" id="road" name="customerAddressRoad" placeholder="Rua x">
+                </div>
+                <div class="form-group">
+                  <input type="text" class="form-control" id="number" name="customerAddressHouseNumber" placeholder="Nº">
+                </div>
+              </div>
+              <div class="form-row">
+                <div class="form-group col-md-4">
+                  <input type="text" class="form-control" id="neighborhood" name="customerAddressNeighborhood" placeholder="Bairro">
+                </div>
+                <div class="form-group col-md-8">
+                  <input type="number" class="form-control" id="complement" name="customerAddressComplement" placeholder="Complemento">
+                </div>
+              </div>
+
+              <div class="form-row">
+                <div class="form-group col-md-6">
+                  <select id="state" name="customerState" class="form-control" style="height: 2.05em">
+                    <option selected disabled>Estado</option>
+                    {% for state in states %}
+                      <option value="{{ state.Id }}" uf="{{ state.Uf }}">{{ state.Nome }}</option>
+                    {% endfor %}
+                  </select>
+                </div>
+
+                <div class="form-group col-md-6">
+                  <select id="city" name="customerCity" class="form-control" style="height: 2.05em">
+                    <option selected disabled>Cidade</option>
+                  </select>
+                </div>
+              </div>
+
+            </div>
+
+            <div id="tabs-3">
+
+              <div class="form-row">
+                <div class="form-group col-md-6">
+                  <input type="email" id="email" name="customerEmail" class="form-control" placeholder="Email">
+                </div>
+
+                <div class="form-group col-md-6">
+                  <input type="email" name="customerEmail2" id="email2" class="form-control" placeholder="Email (opcional)">
+                </div>
+              </div>
+
+              <div class="form-row">
+
+                <div class="form-group col-sm-1">
+                  <input type="number" id="ddd" name="dddcustomerEnterprizeNumber" class="form-control" placeholder="DDD" required>
+                </div>
+
+                <div class="form-group col-md-5">
+                  <input type="number" id="enumber" name="customerEnterpriseNumber" class="form-control" placeholder="Numero" required>
+                </div>
+
+                <div class="form-group col-sm-1">
+                  <input type="number" name="dddCustomerCellphone" id="dddc" class="form-control" placeholder="DDD" required>
+                </div>
+
+                <div class="form-group col-md-5">
+                  <input type="number" id="cellphone" name="customerCellphoneNumber" class="form-control" placeholder="Cellphone number" required>
+                </div>
+              </div>
+
+              <div class="form-row">
+
+                <div class="form-group col-sm-1">
+                  <input type="number" id="dddo" name="dddcustomerNumber" class="form-control" placeholder="DDD" required>
+                </div>
+
+                <div class="form-group col-md-5">
+                  <input type="number" id="onumber" name="customerNumber" class="form-control" placeholder="Numero (opcional)" required>
+                </div>
+
+                <div class="form-group col-sm-1">
+                  <input type="number" name="customerNumber2" id="dddo2" class="form-control" placeholder="DDD" required>
+                </div>
+
+                <div class="form-group col-md-5">
+                  <input type="number" id="onumber2" name="customerNumber2" class="form-control" placeholder="Numero 2 (opicional)" required>
+                </div>
+              </div>
+
+            </div>
+
+          </div>
+        </form>
+      </div>
+      <input type="hidden" id="entity" entity="{{ entity }}" value="ninja">
+      <div id="dialog" title="Aviso">
+      </div>  
+
+      {# aqui termina a brincadeira #}
+
+    {% endblock %}
+    {% block cjs %}
+      <script src="/assets/js/sys/axios.min.js"></script>
+      <script src="/assets/js/ajax.js"></script>
+      <script src="/assets/js/register/customer.js"></script>
+    {% endblock %}

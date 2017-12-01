@@ -64,8 +64,8 @@ class HeightMapper implements MapperInterface
     {
         $repository = $this->em->getRepository($this->entity)->findBy([], $orderBy);
         $result = array_map(function ($repository) {
-            $result['id'] = $repository->getId();
-            $result['value'] = $repository->getHeight();
+            $result['id'] = $repository->id;
+            $result['value'] = $repository->height;
             return $result;
         }, $repository);
 

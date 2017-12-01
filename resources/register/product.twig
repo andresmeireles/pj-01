@@ -36,8 +36,8 @@
     {% for prod in product %}
     <tr id='{{ prod.id }}'>
       <td><center>{{ prod.id }}</center></td>
-      <td><center>{{ prod.getDescription }}</center></td>
-      <td><center>{{ prod.getHeight }}</center></td>
+      <td><center>{{ prod.description.description }}</center></td>
+      <td><center>{{ prod.height.height }}</center></td>
       <td><center>{{ prod.price | money }}</center></td>
       <td><center><span class="badge badge-pill badge-info edit">Editar</span> <div class="badge badge-pill badge-danger rmv">Remove</div></center></td>
     </tr>

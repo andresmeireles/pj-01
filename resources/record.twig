@@ -41,7 +41,7 @@
     {% for prod in product %}
     <tr>
       <td><center>{{ prod.id }}</center></td>
-      <td><center>{{ prod.getDescription }} {{ prod.getHeight | height}}</center></td>
+      <td><center>{{ prod.description }} {{ prod.height | height}}</center></td>
       <td><center>{{ prod.price | money }}</center></td>
     </tr>
     {% endfor %}

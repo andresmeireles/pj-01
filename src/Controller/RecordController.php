@@ -47,7 +47,7 @@ class RecordController
     public function getCustomers($request, $response) 
     {
         $entity = str_rot13('customer');
-        $customers = $this->db->getRepository('\App\Entity\Customer')->findAll();
+        $customers = $this->db->getRepository('\App\Entity\EnterpriseCustomer')->findAll();
         $states = $this->db->getRepository('\App\Entity\Estados')->findBy(array(), ['Nome' => 'ASC']);
         
         return $this->view->render($response, '/register/customers.twig', array(

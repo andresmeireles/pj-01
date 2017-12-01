@@ -25,6 +25,11 @@ $(function () {
 				var firstName = $('#name').val();
 				var lastName = $('#lastname').val();
 				var cpf = $('#cpf').val();
+				var socialName = document.querySelector('#socialName').value;
+				var fantasyName = document.querySelector('#fantasyName').value;				
+				var cnpj = document.querySelector('#cnpj').value;
+				var stateSubscription = document.querySelector('#stateSubscription').value;
+				var municipalSubscription = document.querySelector('#municipalSubscription').value;
 				var addrRoad = $('#road').val();
 				var addrNumber = $('#number').val();
 				var addrNeighborhood = $('#neighborhood').val();
@@ -51,6 +56,13 @@ $(function () {
 					[$('#name').attr('name')]: firstName,
 					[$('#lastname').attr('name')]: lastName,
 					[$('#cpf').attr('name')] : cpf,
+
+					[document.querySelector('#socialName').getAttribute('name')] : socialName, 
+					[document.querySelector('#fantasyName').getAttribute('name')] : fantasyName,
+					[document.querySelector('#cnpj').getAttribute('name')] : cnpj,
+					[document.querySelector('#stateSubscription').getAttribute('name')] : stateSubscription,				
+					[document.querySelector('#municipalSubscription').getAttribute('name')]: municipalSubscription,
+
 					[$('#road').attr('name')]: addrRoad,
 					[$('#number').attr('name')]: addrNumber,
 					[$('#neighborhood').attr('name')]: addrNeighborhood,
@@ -59,7 +71,7 @@ $(function () {
 					[$('#state').attr('name')]: addrState,
 					[$('#city').attr('name')]: addrCity,
 					[$('#email').attr('name')]: email,
-					[$('#email').attr('name')]: email2,
+					[$('#email2').attr('name')]: email2,
 					[$('#enumber').attr('name')]: finalEnumber,
 					[$('#cellphone').attr('name')]: finalCellphoneNumber,
 					[$('#onumber').attr('name')]: finalOnumber,
@@ -193,4 +205,20 @@ $(function () {
 	}
 	
 	document.querySelector('#completeWithCep').addEventListener('click', completeMap);
+
+	var infos = document.querySelectorAll('.info');
+	for (var c = 0; c < infos.length; c++) {
+		infos[c].addEventListener('click', function () {
+			var element = this.parentElement.parentElement.parentElement;
+			var td = element.querySelectorAll('td')[0];
+			var entityId = td.getAttribute('entityId');
+			console.log(entityId);
+
+			axios.options('/registros/clientes/'+ entityId, {
+				entity: document.querySelector('#entity').getAttribute('entity'),
+			}).then( function (json) {
+				console.log(json.data);
+			});
+		});
+	}	
 });

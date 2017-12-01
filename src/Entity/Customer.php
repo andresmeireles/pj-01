@@ -2,8 +2,7 @@
 namespace App\Entity;
 
 /**
- * @Entity
- * @Table(name="customers")
+ * @MappedSuperclass
  */
 class Customer
 {
@@ -20,7 +19,7 @@ class Customer
     /** @Column(type="string") */
     public $customerLastName;
     
-    /** @Column(type="integer", length=11, unique=true) */
+    /** @Column(type="float", length=11, unique=true) */
     public $customerCPF;
 
     /** @Column(type="string") */
@@ -56,19 +55,12 @@ class Customer
     /** @Column(type="string", nullable=true) */
     public $customerEmail2;
 
-    /** @Column(type="integer", length=10) */
-    public $customerEnterpriseNumber;
-
-    /** @Column(type="integer", length=11) */
+    /** @Column(type="float", length=11) */
     public $customerCellphoneNumber;
 
-    /** @Column(type="integer", length=11, nullable=true) */
+    /** @Column(type="float", length=11, nullable=true) */
     public $customerNumber;
 
-    /** @Column(type="integer", length=11, nullable=true) */
+    /** @Column(type="float", length=11, nullable=true) */
     public $customerNumber2;
-    
-    function getId() {
-        return $this->id;
-    }
 }
