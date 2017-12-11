@@ -8,17 +8,17 @@ namespace App\Entity;
 class EnterpriseCustomer extends Customer
 {
 	/**
-	 * @Column(type="float", length=15)
+	 * @Column(type="string", length=15)
 	 */
 	public $customerCnpj;
 
-	/*
-	 * @column(type="integer")
+	/**
+	 * @Column(type="string")
 	 */
 	public $customerStateSubscription;
 
-	/*
-	* @column(type="integer", nullable=true)
+	/**
+	 * @Column(type="string", nullable=true)
 	 */
 	public $customerMunicipalSubscription;
 
@@ -31,6 +31,9 @@ class EnterpriseCustomer extends Customer
 	 * @Column(type="string")
 	 */
 	public $customerSocialName;
+
+	/** @Column(type="integer", length=2, nullable=true) */
+    public $customerEnterpriseNumberDdd;
 
     /** @Column(type="float", length=10) */
     public $customerEnterpriseNumber;

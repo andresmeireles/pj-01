@@ -1,15 +1,20 @@
 <?php
 namespace App\Entity\Mapper;
 
+use \Doctrine\ORM\EntityManager;
+
 interface MapperInterface
 {
-    public function insertData($parans);
+	public function insert($params);
 
-    public function updateData($id, $params);
+    public function update($id, $params);
     
-    public function removeData($id);
+    public function remove($id);
 
-    //public function registerExists();
+    public function insertData($entity, array $params,EntityManager $em);
+
+    public function getSingleRegister($id);
+
     //public function getEntityItem();
 
     //public function getEntityItems();

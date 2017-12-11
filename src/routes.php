@@ -3,6 +3,7 @@
 $app->get('/', 'HomeController:home')->setName('home');
 
 $app->group('', function () use ($app) {
+
     // auth
     $app->get('/auth/signup', 'AuthController:getSignup')->setName('auth.signup');
     $app->post('/auth/signup', 'AuthController:postSignup');
@@ -10,10 +11,12 @@ $app->group('', function () use ($app) {
     // user signin
     $app->get('/auth/signin', 'AuthController:getSignin')->setName('auth.signin');
     $app->post('/auth/signin', 'AuthController:postSignin');
+
 })->add('GestMiddleware')->add('CsrfViewMiddleware')->add('csrf');
 
 // all routes
 $app->group('', function () use ($app) {
+
     // changepassword
     $app->group('', function() use ($app) {
         $app->get('/auth/changepassword', 'PasswordController:getChangePassword')->setName('changepassword');
@@ -38,8 +41,9 @@ $app->group('', function () use ($app) {
     $app->get('/getSingleRegistry/{entity}/{id}', 'RecordController:getSingleRegistry');
     
     $app->get('/registros/clientes', 'RecordController:getCustomers');
+    $app->post('/registros/clientes', 'RecordController:update');
     $app->put('/registros/clientes', 'RecordController:getSingleRegisterByQuery');
-    $app->options('/registros/clientes/{id}', 'RecordController:getSingleRegistry');
+    $app->options('/registros/clientes/{id}/{entity}', 'RecordController:getSingleRegistry');
     
     //relatorios
     $app->get('/relatorios[/]', 'ReportController')->setName('report');
@@ -59,7 +63,6 @@ $app->group('', function () use ($app) {
 
     $app->post('/getProductJson', 'ProductionController:getProductJson');
     $app->post('/sendProduction', 'ProductionController:saveProduction');
-    
     
 });//->add('AuthMiddleware');
 

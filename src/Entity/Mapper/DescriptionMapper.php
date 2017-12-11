@@ -18,7 +18,7 @@ class DescriptionMapper implements MapperInterface
         $this->entity = '\App\Entity\Description';
     }
     
-    public function insertData($params)
+    public function insert($params)
     {
         if ($this->sanitizeParams($params)) {
             $this->validator->failed();
@@ -42,7 +42,7 @@ class DescriptionMapper implements MapperInterface
         return true;
     }
     
-    public function updateData($id, $params)
+    public function update($id, $params)
     {
         if (!$this->registerExists($params)) {
             return false;
@@ -63,7 +63,12 @@ class DescriptionMapper implements MapperInterface
         return true;
     }
     
-    public function removeData($id)
+    public function insertData($entity, $params, $em)
+    {
+        
+    }
+
+    public function remove($id)
     {
         $entity = $this->em->find('\App\Entity\Description', $id);
         $connection = $this->em; 
@@ -79,6 +84,8 @@ class DescriptionMapper implements MapperInterface
         
         return true;
     }
+
+    public function getSingleRegister($id){}
     
     public function getRegister(array $orderBy = null)
     {

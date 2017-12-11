@@ -17,44 +17,17 @@ class CustomerMapper implements MapperInterface
         $this->validator = $validator;
     }
     
-    public function insertData($params)
+    public function insert($params)
     {
         $em = $this->em;
-
+        $entity = new EnterpriseCustomer;
+        
         if (!$this->sanitizeParams($params)) {
             return $this->validator->failed();
         }        
         
-        $entity = new EnterpriseCustomer;
-        extract($params);
-        
-        if (!$this->registerExists($cpf)) {
-            return false;
-        }
-        
         try {
-
-            $entity->customerFirstName = $customerFirstName;
-            $entity->customerLastName =$customerLastName;
-            $entity->customerCPF = $customerCPF;
-            $entity->customerAddressRoad = $customerAddressRoad;
-            $entity->customerAddressNeighborhood = $customerAddressNeighborhood;
-            $entity->customerAddressZipcode = $customerAddressZipcode;
-            $entity->customerAddressHouseNumber = $customerAddressHouseNumber;
-            $entity->customerAddressComplement = $customerAddressComplement;
-            $entity->customerCity = $em->find('\App\Entity\Municipios', $customerCity);
-            $entity->customerState = $em->find('\App\Entity\Estados', $customerState);
-            $entity->customerEmail = $customerEmail;
-            $entity->customerEmail2 = $customerEmail2;
-            $entity->customerEnterpriseNumber = $customerEnterpriseNumber;
-            $entity->customerCellphoneNumber = $customerCellphoneNumber;
-            $entity->customerNumber = ($customerNumber == '' ? null : $customerNumber);
-            $entity->customerNumber2 = ($customerNumber2 == '' ? null : $customerNumber2);
-            $entity->customerSocialName = $customerSocialName;
-            $entity->customerFantasyName = $customerFantasyName;
-            $entity->customerCnpj = $customerCnpj;
-            $entity->customerStateSubscription = $customerStateSubscription;
-            $entity->customerMunicipalSubscription = $customerMunicipalSubscription;
+            $this->insertData($entity, $params, $em);
 
             $em->persist($entity);
             $em->flush();
@@ -67,6 +40,30 @@ class CustomerMapper implements MapperInterface
         }
         
     }
+
+    public function update($id, $params)
+    {
+        $em = $this->em;
+
+        $entity = $em->find(EnterpriseCustomer::class, $id);
+        
+        if (!$this->sanitizeParams($params)) {
+            return $this->validator->failed();
+        }        
+
+        try {
+
+            $this->insertData($entity, $params, $em);
+               
+            $em->merge($entity);
+            $em->flush();
+            
+            return true;    
+        } catch (\Doctrine\DBAL\Exception\UniqueConstraintViolationException $e) {
+            $error['msg'] = $e->getMessage();
+            return $error;
+        }
+    }
     
     public function getRegister(array $query)
     {
@@ -77,10 +74,25 @@ class CustomerMapper implements MapperInterface
         
         return $result;
     }
-    
-    public function updateData($id, $params){}
 
-    public function removeData($id){}
+    public function getSingleRegister($id)
+    {
+        $em = $this->em;
+
+        try {
+            if ($repository = $em->find('\App\Entity\EnterpriseCustomer', $id)) {
+                return $repository;   
+            }
+            throw new \Exception('Cliente não existe');
+        } catch (\Exception $e) {
+            return $e->getMessage();
+        }
+    }
+
+    public function remove($id)
+    {
+
+    }
 
     public function registerExists($param)
     {
@@ -91,10 +103,6 @@ class CustomerMapper implements MapperInterface
         return true;
     }
 
-    public function getEntityItem(){}
-
-    public function getEntityItems(){}
-
     public function sanitizeParams($params)
     {
         $validator = $this->validator->validate($params, [
@@ -103,7 +111,7 @@ class CustomerMapper implements MapperInterface
             'customerCPF' => v::notEmpty()->cpf(),
             'customerSocialName' => v::stringType()->notEmpty(),
             'customerFantasyName' => v::optional(v::stringType()),
-            'customerCnpj' => v::numeric()->notEmpty()->noWhitespace(),
+            'customerCnpj' => v::numeric()->notEmpty()->noWhitespace(),//->CpfExists(),
             'customerStateSubscription' => v::numeric()->notEmpty()->noWhitespace(),
             'customerMunicipalSubscription' => v::numeric()->notEmpty()->noWhitespace(),
             'customerAddressRoad' => v::notEmpty(),
@@ -127,5 +135,35 @@ class CustomerMapper implements MapperInterface
         }
 
         return true;
+    }
+
+    public function insertData($entity,array $params,EntityManager $entityManager) 
+    {
+        $em = $entityManager;
+        extract($params);
+
+        $entity->customerFirstName = $customerFirstName;
+        $entity->customerLastName =$customerLastName;
+        $entity->customerCPF = $customerCPF;
+        $entity->customerAddressRoad = $customerAddressRoad;
+        $entity->customerAddressNeighborhood = $customerAddressNeighborhood;
+        $entity->customerAddressZipcode = $customerAddressZipcode;
+        $entity->customerAddressHouseNumber = $customerAddressHouseNumber;
+        $entity->customerAddressComplement = $customerAddressComplement;
+        $entity->customerCity = $em->find('\App\Entity\Municipios', $customerCity);
+        $entity->customerState = $em->find('\App\Entity\Estados', $customerState);
+        $entity->customerEmail = $customerEmail;
+        $entity->customerEmail2 = $customerEmail2;
+        $entity->customerEnterpriseNumber = $customerEnterpriseNumber;
+        $entity->customerCellphoneNumber = $customerCellphoneNumber;
+        $entity->customerNumber = ($customerNumber == '' ? null : $customerNumber);
+        $entity->customerNumber2 = ($customerNumber2 == '' ? null : $customerNumber2);
+        $entity->customerSocialName = $customerSocialName;
+        $entity->customerFantasyName = $customerFantasyName;
+        $entity->customerCnpj = $customerCnpj;
+        $entity->customerStateSubscription = $customerStateSubscription;
+        $entity->customerMunicipalSubscription = $customerMunicipalSubscription;
+
+        return $entity;
     }
 }

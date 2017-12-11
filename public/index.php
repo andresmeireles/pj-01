@@ -1,9 +1,9 @@
 <?php
+session_start();
 
 use \Slim\App;
 use \Dotenv\Dotenv;
-use \Tracy\Debugger;   
-session_start();
+use \Tracy\Debugger; 
 
 require __DIR__.'/../vendor/autoload.php';
 

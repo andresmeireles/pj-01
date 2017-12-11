@@ -18,7 +18,7 @@ class HeightMapper implements MapperInterface
         $this->entity = '\App\Entity\Height';
     }
     
-    public function insertData($params)
+    public function insert($params)
     {
         $entity = new $this->entity;
         extract($params); // create height variable  
@@ -41,9 +41,11 @@ class HeightMapper implements MapperInterface
         return true;
     }
     
-    public function updateData($id, $params){}
+    public function update($id, $params){}
         
-    public function removeData($id)
+    public function insertData($entity, $params, $em){}
+
+    public function remove($id)
     {
         $entity = $this->em->find('\App\Entity\Height', $id);
         $connection = $this->em; 
@@ -59,6 +61,8 @@ class HeightMapper implements MapperInterface
 
         return true;
     }
+
+    public function getSingleRegister($id){}
 
     public function getRegister(array $orderBy = null)
     {

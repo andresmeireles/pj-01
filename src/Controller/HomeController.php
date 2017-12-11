@@ -1,6 +1,9 @@
 <?php
 namespace App\Controller;
 
+use Respect\Validation\Validator as v;
+use \App\Validation\ValidatorJson;
+
 /**
 * HomeController: Controller responsavel por renderizar pagina inicial
 */

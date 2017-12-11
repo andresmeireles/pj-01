@@ -20,7 +20,6 @@ class RecordController
     public function __invoke($request, $response)
     {
         $prod = $this->db->getRepository(Product::class)->findAll() ?? '';
-
         $this->view->render($response, 'record.twig', [
             'product' => $prod
         ]);
@@ -85,14 +84,14 @@ class RecordController
     {
         $params = $request->getParam('data');
         $mapper = $this->getMapperName($request->getParam('entity')); 
-        return $response->withJson($mapper->insertData($params));
+        return $response->withJson($mapper->insert($params));
     }
 
     public function remove($request, $response)
     {
         $param = $request->getParam('id');
         $mapper = $this->getMapperName($request->getParam('entity'));
-        return $response->withJson($mapper->removeData($param));
+        return $response->withJson($mapper->remove($param));
     }
 
     public function update($request, $response)
@@ -101,21 +100,21 @@ class RecordController
 
         $params = $request->getParam('params');
         $id = $request->getParam('id');
-        return $response->withJson($mapper->updateData($id, $params));
+        return $response->withJson($mapper->update($id, $params));
     }
 
     public function getSingleRegistry($request, $response, $args)
     {
-        $entity = str_rot13($args['entity']);
-        $class = '\App\Entity\Mapper\\'.ucwords($entity).'Mapper';
-        $mapper = new $class($this->db);
+        $entity = $args['entity'];
+        $mapper = $this->getMapperName($entity);
         $id = $args['id'];
         return $response->withJson($mapper->getSingleRegister($id));
     }
 
     public function getRegistry($request, $response)
     {   
-        $mapper = $this->getMapperName($request->getParam('entity')); 
+        $entity = $request->getParam('entity');
+        $mapper = $this->getMapperName($entity); 
         return $response->withJson($mapper->getRegister(['height' => 'ASC']));
     }
 
@@ -128,6 +127,10 @@ class RecordController
         $mapper = $this->getMapperName($request->getParam('entity'));
         return $response->withJson($mapper->getRegister($query));
     }
+
+    /**********************************************************************************
+     * PRIVATE METHODS
+     **********************************************************************************/
 
     private function getMapperName($entity)
     {

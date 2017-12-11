@@ -1,8 +1,6 @@
 <?php
 use \Slim\Views\Twig;
 use \Slim\Views\TwigExtension;
-use \Doctrine\ORM\Tools\Setup;
-use \Doctrine\ORM\EntityManager;
 use \Respect\Validation\Validator as v;
 
 // to use custom rules
@@ -27,15 +25,17 @@ $container['renderer'] = function ($c) {
     return $renderer;
 };
 
-
 $container['auth'] = function ($container) {
     return new App\Auth\Auth($container);
 };
 
-$container['db'] = function ($c) {
-    require __DIR__.'/../config/bootstrap.php';
+$container['doctrine'] = function ($container) {
+    return new \App\Config\Connection($container);
+};
 
-    return $entityManager;
+$container['db'] = function ($container) {
+    $conn = new \App\Config\Connection();
+    return $conn->connect();
 };
 
 $container['logger'] = function ($container) {
@@ -109,7 +109,7 @@ $actions = array(
 
 foreach ($services as $key => $value) {
     $container[$key] = function ($container) use ($key, $value) {
-        return new $value;
+        return new $value();
     };
 }
 

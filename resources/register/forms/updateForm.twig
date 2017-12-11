@@ -1,49 +1,5 @@
-{% extends 'templates/template.twig' %} 
-
-{% block title %} Sistema - Inicio {% endblock %}
-
-  {% block menu %} 
-
-    {% include "templates/menus/registerMenu.twig" %}
-
-  {% endblock %} {% block content %}
-
-  {# aqui começa a brincadeira #}
-
-  <h3>Clientes</h3><hr>
-
-  <button style="cursor: pointer" class="btn btn-primary btn-lg btn-block" id="show-modal" class="insert">Adicionar Cliente</button>
-  <hr>
-  <table>
-    <thead class="table">
-      <tr>
-        <th><center>ID</center></th>
-        <th><center>Reponsavel</center></th>
-        <th><center>Razão Social</center></th>
-        <th><center>Nome Fantasia</center></th>
-        <th><center>C.N.P.J</center></th>
-        <th><center>Cidade/Estado</center></th>
-        <th></th>
-      </tr>
-    </thead>
-    <tbody>
-      {% for customer in customers %}
-        <tr>
-          <td width="05%" entityId="{{ customer.id }}"><center>{{ customer.id }}</center></td>  
-          <td width="18%"><center>{{ customer.customerFirstName }}</center></td>
-          <td width="18%"><center>{{ customer.customerSocialName }}</center></td>
-          <td><center>{{ customer.customerFantasyName   }}</center></td>
-          <td width="20%"><center>{{ customer.customerCnpj }}</center></td>
-          <td><center>{{ customer.customerCity.Nome }} /{{ customer.customerState.Nome }}</center></td>
-          <td><center>&ensp;<div class="badge badge-pill badge-secondary info" style="cursor: pointer">Info</div></center></td>  
-        </tr>
-      {% endfor %}
-    </tbody>
-  </table>
-
-  <div id="dialog-confirm" title="Adicionar novo Cliente">
-    <form>
-      <div id="tabs">
+<form>
+      <div id="tabs-update">
         <ul>
           <li><a href="#tabs-1">Dados Cadastrais</a></li>
           <li><a href="#tabs-2">Endereço</a></li>
@@ -52,6 +8,7 @@
         <div id="tabs-1">
           <fieldset>
             <legend>Pessoa fisca</legend>
+            <input type="hidden" id="idRegister">
             <div class="form-row">
               <div class="form-group col-md-4">
                 <input type="text" class="form-control" name="customerFirstName" id="name" placeholder="Responsavel" required>
@@ -186,23 +143,7 @@
             </div>
 
           </div>
-        </form>
+        </fieldset>
       </div>
-      <input type="hidden" id="entity" entity="{{ entity }}" value="ninja">
-
-
-  <div id="dialog-update" title="Atualizar dados cliente">
-    {% include 'register/forms/updateForm.twig' %}
-  </div>
-
-      <div id="dialog" title="Aviso">
-      </div>  
-
-      {# aqui termina a brincadeira #}
-
-    {% endblock %}
-    {% block cjs %}
-      <script src="/assets/js/sys/axios.min.js"></script>
-      <script src="/assets/js/ajax.js"></script>
-      <script src="/assets/js/register/customer.js"></script>
-    {% endblock %}
+    </div>
+  </form>
