@@ -21,8 +21,8 @@ class Deliveryreport implements ReportInterface
         unset($data['report']);
 
         $data = array_map(function ($datas) {
-            foreach ($datas as $data) {
-                $sanitizedResult = ltrim(rtrim($data));
+            foreach ($datas as $key => $value) {
+                $sanitizedResult[$key] = ltrim(rtrim($value));
             }
             return $sanitizedResult;
         }, $data);
@@ -159,15 +159,15 @@ class Deliveryreport implements ReportInterface
         return $body;
     }
     
-    public function validate(array $data)
+    public function validate($data)
     {
         $validator = $this->validator->validate($data, [
             'customer' => v::stringType()->notEmpty(),
-            'city' => v::stringType()->not(v::numeric())->notEmpty(),
+            'city' => v::stringType()->notEmpty(),
             'gAmount' => v::numeric()->positive()->notEmpty()->noWhitespace(),
             'mAmount' => v::numeric()->positive()->notEmpty()->noWhitespace(),
             'pAmount' => v::numeric()->positive()->notEmpty()->noWhitespace(),
-            'formPg' => v::stringType()->not(v::numeric())->notEmpty(),
+            'formPg' => v::stringType()->notEmpty()->not(v::numeric()),
             'ship' => v::numeric()->positive()->notEmpty()->noWhitespace()
         ]);
             

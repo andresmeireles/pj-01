@@ -7,5 +7,5 @@ interface ReportInterface
 
     public function createBody(array $data);
 
-    public function validate(array $data);
+    public function validate($data);
 }

@@ -21,8 +21,8 @@ class BoardingReport implements ReportInterface
         unset($data['report']);
 
         $data = array_map(function ($datas) {
-            foreach ($datas as $data) {
-                $sanitizedResult = ltrim(rtrim($data));
+            foreach ($datas as $key => $value) {
+                $sanitizedResult[$key] = ltrim(rtrim($value));
             }
             return $sanitizedResult;
         }, $data);
