@@ -67,7 +67,7 @@ class ProductMapper implements MapperInterface
         }
     }
 
-    public function insertData($entity, $params, $em)
+    public function insertData($entity, array $params,EntityManager $em)
     {
         extract($params);
 

@@ -63,7 +63,7 @@ class DescriptionMapper implements MapperInterface
         return true;
     }
     
-    public function insertData($entity, $params, $em)
+    public function insertData($entity,array $params,EntityManager $em)
     {
         
     }

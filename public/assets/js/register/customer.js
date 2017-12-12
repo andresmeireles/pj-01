@@ -44,30 +44,6 @@ $(function () {
 			document.querySelector('form').reset();
 		}	
 	});
-	
-	$(document).find('#dialog-form').dialog({
-		autoOpen: false,
-		height: "auto",
-		width: "auto",
-		modal: true,
-		resizable: true,
-		buttons: {
-			'Remover': () => {
-				var entity = $('#confirm').attr('entity');
-				var id = $('body').data('id');
-				$('body').data('id', '');
-
-				deleteItem(entity, id);
-			},
-			Cancel: function() {
-				var el = $(document).find('.edit-prod tr').remove();
-				$( this ).dialog( "close" );
-			}
-		},
-		close: function() {
-			$( this ).dialog( "close" );
-		}	
-	});
 
 	$(document).find('#dialog-update').dialog({
 		autoOpen: false,
@@ -83,13 +59,21 @@ $(function () {
 				
 				update(entity, params, id);
 			},
+			"Remover": function () {
+				var entity = $(document).find('#entity').attr('entity');
+				var id = this.querySelector('#idRegister').value;
+				if (removeSelectedItem()){
+					alert('apagou!');
+				}
+				//remove(entity, id);
+			},
 			Cancel: function() {
 				$( this ).dialog( "close" );
 			}
 		},
 	});
 	
-	$(document).find('#dialog').dialog({
+	$(document).find('#dialog-remove').dialog({
 		autoOpen: false,
 		resizable: true,
 		height: 'auto',
@@ -97,10 +81,21 @@ $(function () {
 		modal: true,
 		buttons: {
 			'OK' : function() {
-				$('#dialog p').remove();
+				console.log(this);
+				var entity = $(document).find('#entity').attr('entity');
+				var id = this.querySelector('input').value;
+				alert(id);
+				$('#dialog-remove p').remove();
 				$(this).dialog('close');
+				return true;
+			}, 
+			'Fechar': function () {
+				$('#dialog-remove p').remove();
+				$(this).dialog('close');
+				return false;
 			}
 		},
+
 	});
 	
 	document.querySelector('#show-modal').addEventListener('click', function () {
@@ -146,11 +141,16 @@ $(function () {
 			
 			axios.options('/registros/clientes/'+ entityId +'/'+ entity)
 			.then( function (json) {
-				var data = json.data;
+				var data = json.data; 
+
+				var dialog = document.querySelector('#dialog-remove input');
+				dialog.value = data.id;
+
 				var customerUpdate = document.querySelector('#dialog-update');
 				if (typeof data.id != 'number') {
 					alert(data);
 				}
+
 				customerUpdate.querySelector('#idRegister').value = data.id;
 				customerUpdate.querySelector('#name').value = data.customerFirstName;
 				customerUpdate.querySelector('#lastname').value = data.customerLastName;
@@ -340,6 +340,15 @@ $(function () {
 				el.add(opt, null);
 			}
 		});
+	}
+
+	function removeSelectedItem() {
+		var p = document.createElement('p');
+		var text = document.createTextNode('Você deseja remover esse item?');
+		p.appendChild(text);
+		var dialog = document.querySelector('#dialog-remove');
+		dialog.appendChild(p);
+		$('#dialog-remove').dialog('open');
 	}
 
 	//Ends here!
