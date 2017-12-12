@@ -85,7 +85,7 @@ class ProductMapper implements MapperInterface
     {
         $entity = $this->em->find(Product::class ,$id);
         
-        $connection = $this->em; 
+        $connection = $this->em->getConnection(); 
         $connection->beginTransaction();
         
         try {

@@ -71,7 +71,7 @@ class DescriptionMapper implements MapperInterface
     public function remove($id)
     {
         $entity = $this->em->find('\App\Entity\Description', $id);
-        $connection = $this->em; 
+        $connection = $this->em->getConnection(); 
         $connection->beginTransaction();
         
         try {

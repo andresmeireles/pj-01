@@ -91,7 +91,25 @@ class CustomerMapper implements MapperInterface
 
     public function remove($id)
     {
+        $em = $this->em;
+        $result = '';
 
+        $connection = $em->getConnection();
+        $connection->beginTransaction();
+
+        try {
+            $entity = $em->find(EnterpriseCustomer::class, $id);
+            $em->remove($entity);
+            $em->flush();
+            $result = true;
+        } catch (\Exception $e) {
+            $connection->rollback();
+            $result = $e->getMessage();
+        }
+
+        $connection->commit();
+
+        return $result;
     }
 
     public function registerExists($param)

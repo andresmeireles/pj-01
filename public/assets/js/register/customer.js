@@ -84,7 +84,10 @@ $(function () {
 				console.log(this);
 				var entity = $(document).find('#entity').attr('entity');
 				var id = this.querySelector('input').value;
-				alert(id);
+				
+				//from ajax.js
+				remove(entity, id);
+
 				$('#dialog-remove p').remove();
 				$(this).dialog('close');
 				return true;
